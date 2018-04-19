@@ -1,8 +1,8 @@
 # UniVRMTest
 
-This is a project for UniVRM build test and samples.
+This is a project for [UniVRM](https://github.com/dwango/UniVRM) build test and samples.
 
-これはUniVRMのテストとサンプル集です。
+これは[UniVRM](https://github.com/dwango/UniVRM)のテストとサンプル集です。
 
 # License
 
