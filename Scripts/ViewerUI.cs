@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
@@ -83,6 +84,16 @@ namespace VRM
             m_version.text = string.Format("VRMViewer {0}.{1}", 
                 VRMVersion.MAJOR, VRMVersion.MINOR);
             m_open.onClick.AddListener(OnOpenClicked);
+
+            // load initial bvh
+            var path = Application.streamingAssetsPath + "/test.txt";
+            var context = new UniHumanoid.ImporterContext
+            {
+                Path = path
+            };
+            UniHumanoid.BvhImporter.Import(context);
+
+            SetMotion(context.Root.GetComponent<HumanPoseTransfer>());
         }
 
         private void Update()
@@ -120,7 +131,7 @@ namespace VRM
 
             m_loaded = go;
 
-            var dst = go.AddComponent<HumanPoseTransfer>();
+            var dst =m_loaded.AddComponent<HumanPoseTransfer>();
             dst.Source = m_src;
             dst.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
 
@@ -130,6 +141,19 @@ namespace VRM
             var lookAt = go.GetComponent<VRMLookAtHead>();
             lookAt.Target = m_target.transform;
             lookAt.UpdateType = UpdateType.LateUpdate; // after HumanPoseTransfer's setPose
+        }
+
+        void SetMotion(HumanPoseTransfer src)
+        {
+            m_src = src;
+            src.GetComponent<Renderer>().enabled = false;
+
+            if (m_loaded != null)
+            {
+                var dst = m_loaded.AddComponent<HumanPoseTransfer>();
+                dst.Source = m_src;
+                dst.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
+            }
         }
     }
 }
