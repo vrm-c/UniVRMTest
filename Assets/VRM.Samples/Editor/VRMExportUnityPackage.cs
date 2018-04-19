@@ -98,7 +98,7 @@ namespace VRM
                 , path, ExportPackageOptions.Interactive);
 
             // サンプル
-            AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM.Samples").ToArray()
+            AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM.Samples").Concat(EnumerateFiles("Assets/StreamingAssets")).ToArray()
                 , GetPath(PREFIX+"-RuntimeLoaderSample"), ExportPackageOptions.Interactive);
 
             Debug.LogFormat("exported: {0}", path);
