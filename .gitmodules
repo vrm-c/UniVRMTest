@@ -1,0 +1,3 @@
+[submodule "Assets/VRM"]
+	path = Assets/VRM
+	url = https://github.com/dwango/UniVRM.git
