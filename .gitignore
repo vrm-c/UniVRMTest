@@ -33,3 +33,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+Assets/_Local/
+Assets/_Local.meta
+
