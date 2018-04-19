@@ -6,5 +6,5 @@ This is a project for [UniVRM](https://github.com/dwango/UniVRM) build test and 
 
 # License
 
-MIT License
+[MIT License](License.txt)
 
