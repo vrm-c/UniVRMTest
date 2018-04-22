@@ -17,14 +17,6 @@ namespace VRM
         [Range(0.1f, 5.0f)]
         public float DollySpeed = 1.0f;
 
-        [SerializeField]
-        Camera m_camera;
-
-        private void Reset()
-        {
-            m_camera = GetComponent<Camera>();
-        }
-
         struct PosRot
         {
             public Vector3 Position;
