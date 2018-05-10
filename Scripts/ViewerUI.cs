@@ -81,18 +81,27 @@ namespace VRM
 
         private void Start()
         {
-            m_version.text = string.Format("VRMViewer {0}.{1}", 
+            m_version.text = string.Format("VRMViewer {0}.{1}",
                 VRMVersion.MAJOR, VRMVersion.MINOR);
             m_open.onClick.AddListener(OnOpenClicked);
 
             // load initial bvh
-            var path = Application.streamingAssetsPath + "/test.txt";
+            LoadMotion(Application.streamingAssetsPath + "/test.txt");
+
+            string[] cmds = System.Environment.GetCommandLineArgs();
+            if (cmds.Length > 1)
+            {
+                LoadModel(cmds[1]);
+            }
+        }
+
+        private void LoadMotion(string path)
+        {
             var context = new UniHumanoid.ImporterContext
             {
                 Path = path
             };
             UniHumanoid.BvhImporter.Import(context);
-
             SetMotion(context.Root.GetComponent<HumanPoseTransfer>());
         }
 
@@ -110,8 +119,17 @@ namespace VRM
                 return;
             }
 
-            Debug.LogFormat("{0}", path);
+            LoadModel(path);
+        }
 
+        void LoadModel(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return;
+            }
+
+            Debug.LogFormat("{0}", path);
             var go = VRMImporter.LoadFromPath(path);
             if (go == null)
             {
