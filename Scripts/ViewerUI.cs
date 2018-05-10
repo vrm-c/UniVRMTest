@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using UniHumanoid;
 using UnityEngine;
@@ -29,6 +30,78 @@ namespace VRM
         [SerializeField]
         GameObject m_target;
 
+        [SerializeField]
+        GameObject Root;
+
+        [Serializable]
+        struct TextFields
+        {
+            [SerializeField, Header("Info")]
+            Text m_textModelTitle;
+            [SerializeField]
+            Text m_textModelVersion;
+            [SerializeField]
+            Text m_textModelAuthor;
+            [SerializeField]
+            Text m_textModelContact;
+            [SerializeField]
+            Text m_textModelReference;
+
+            [SerializeField, Header("CharacterPermission")]
+            Text m_textPermissionAllowed;
+            [SerializeField]
+            Text m_textPermissionViolent;
+            [SerializeField]
+            Text m_textPermissionSexual;
+            [SerializeField]
+            Text m_textPermissionCommercial;
+            [SerializeField]
+            Text m_textPermissionOther;
+
+            [SerializeField, Header("DistributionLicense")]
+            Text m_textDistributionLicense;
+            [SerializeField]
+            Text m_textDistributionOther;
+
+            public void Start()
+            {
+                m_textModelTitle.text = "";
+                m_textModelVersion.text = "";
+                m_textModelAuthor.text = "";
+                m_textModelContact.text = "";
+                m_textModelReference.text = "";
+
+                m_textPermissionAllowed.text = "";
+                m_textPermissionViolent.text = "";
+                m_textPermissionSexual.text = "";
+                m_textPermissionCommercial.text = "";
+                m_textPermissionOther.text = "";
+
+                m_textDistributionLicense.text = "";
+                m_textDistributionOther.text = "";
+            }
+
+            public void Update(glTF_VRM_Meta meta)
+            {
+                m_textModelTitle.text = meta.title;
+                m_textModelVersion.text = meta.version;
+                m_textModelAuthor.text = meta.author;
+                m_textModelContact.text = meta.contactInformation;
+                m_textModelReference.text = meta.reference;
+
+                m_textPermissionAllowed.text = meta.allowedUser.ToString();
+                m_textPermissionViolent.text = meta.violentUssage.ToString();
+                m_textPermissionSexual.text = meta.sexualUssage.ToString();
+                m_textPermissionCommercial.text = meta.commercialUssage.ToString();
+                m_textPermissionOther.text = meta.otherPermissionUrl;
+
+                m_textDistributionLicense.text = meta.licenseType.ToString();
+                m_textDistributionOther.text = meta.otherLicenseUrl;
+            }
+        }
+        [SerializeField]
+        TextFields m_texts;
+
         private void Reset()
         {
             var buttons = GameObject.FindObjectsOfType<Button>();
@@ -44,7 +117,6 @@ namespace VRM
             m_src = GameObject.FindObjectOfType<HumanPoseTransfer>();
 
             m_target = GameObject.FindObjectOfType<TargetMover>().gameObject;
-
         }
 
         GameObject m_loaded;
@@ -93,6 +165,8 @@ namespace VRM
             {
                 LoadModel(cmds[1]);
             }
+
+            m_texts.Start();
         }
 
         private void LoadMotion(string path)
@@ -109,6 +183,11 @@ namespace VRM
         {
             EnableLipSyncValue = m_enableLipSync.isOn;
             EnableBlinkValue = m_enableAutoBlink.isOn;
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                if (Root != null) Root.SetActive(!Root.activeSelf);
+            }
         }
 
         void OnOpenClicked()
@@ -130,12 +209,20 @@ namespace VRM
             }
 
             Debug.LogFormat("{0}", path);
-            var go = VRMImporter.LoadFromPath(path);
-            if (go == null)
-            {
-                return;
-            }
+            var bytes = File.ReadAllBytes(path);
 
+            var context = new VRMImporterContext(path);
+
+            // GLB形式でJSONを取得しParseします
+            context.ParseVrm(bytes);
+
+            // GLTFにアクセスできます
+            Debug.LogFormat("{0}", context.VRM);
+            m_texts.Update(context.VRM.extensions.VRM.meta);
+
+            VRMImporter.LoadFromBytes(context);
+            var go = context.Root;
+            Debug.LogFormat("loaded {0}", go.name);
             SetModel(go);
         }
 
