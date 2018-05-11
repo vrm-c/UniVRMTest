@@ -102,6 +102,47 @@ namespace VRM
         [SerializeField]
         TextFields m_texts;
 
+        [Serializable]
+        struct UIFields
+        {
+            [SerializeField]
+            Toggle ToggleMotionTPose;
+
+            [SerializeField]
+            Toggle ToggleMotionBVH;
+
+            [SerializeField]
+            ToggleGroup ToggleMotion;
+
+            Toggle m_activeToggleMotion;
+
+            public void UpdateTogle(Action onBvh, Action onTPose)
+            {
+                var value = ToggleMotion.ActiveToggles().FirstOrDefault();
+                if (value == m_activeToggleMotion)
+                    return;
+
+                m_activeToggleMotion = value;
+                if (value == ToggleMotionTPose)
+                {
+                    onTPose();
+                }
+                else if (value == ToggleMotionBVH)
+                {
+                    onBvh();
+                }
+                else
+                {
+                    Debug.Log("motion: no toggle");
+                }
+            }
+        }
+        [SerializeField]
+        UIFields m_ui;
+
+        [SerializeField]
+        HumanPoseClip m_pose;
+
         private void Reset()
         {
             var buttons = GameObject.FindObjectsOfType<Button>();
@@ -111,7 +152,7 @@ namespace VRM
             m_enableLipSync = toggles.First(x => x.name == "EnableLipSync");
             m_enableAutoBlink = toggles.First(x => x.name == "EnableAutoBlink");
 
-            var texts= GameObject.FindObjectsOfType<Text>();
+            var texts = GameObject.FindObjectsOfType<Text>();
             m_version = texts.First(x => x.name == "Version");
 
             m_src = GameObject.FindObjectOfType<HumanPoseTransfer>();
@@ -119,7 +160,7 @@ namespace VRM
             m_target = GameObject.FindObjectOfType<TargetMover>().gameObject;
         }
 
-        GameObject m_loaded;
+        HumanPoseTransfer m_loaded;
 
         AIUEO m_lipSync;
         bool m_enableLipSyncValue;
@@ -188,6 +229,26 @@ namespace VRM
             {
                 if (Root != null) Root.SetActive(!Root.activeSelf);
             }
+
+            m_ui.UpdateTogle(EnableBvh, EnableTPose);
+        }
+
+        void EnableBvh()
+        {
+            if (m_loaded != null)
+            {
+                m_loaded.Source = m_src;
+                m_loaded.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
+            }
+        }
+
+        void EnableTPose()
+        {
+            if (m_loaded != null)
+            {
+                m_loaded.PoseClip = m_pose;
+                m_loaded.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseClip;
+            }
         }
 
         void OnOpenClicked()
@@ -234,11 +295,10 @@ namespace VRM
                 GameObject.Destroy(m_loaded);
             }
 
-            m_loaded = go;
+            m_loaded = go.AddComponent<HumanPoseTransfer>();
 
-            var dst =m_loaded.AddComponent<HumanPoseTransfer>();
-            dst.Source = m_src;
-            dst.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
+            m_loaded.Source = m_src;
+            m_loaded.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
 
             m_lipSync = go.AddComponent<AIUEO>();
             m_blink = go.AddComponent<Blinker>();
@@ -253,12 +313,7 @@ namespace VRM
             m_src = src;
             src.GetComponent<Renderer>().enabled = false;
 
-            if (m_loaded != null)
-            {
-                var dst = m_loaded.AddComponent<HumanPoseTransfer>();
-                dst.Source = m_src;
-                dst.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
-            }
+            EnableBvh();
         }
     }
 }
