@@ -1,8 +1,10 @@
 ﻿#pragma warning disable 0414
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using UnityEngine;
+#if (NET_4_6 && UNITY_2018_1_OR_NEWER)
+using System.Threading.Tasks;
+#endif
 
 
 namespace VRM
