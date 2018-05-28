@@ -46,6 +46,8 @@ namespace VRM
             Text m_textModelContact;
             [SerializeField]
             Text m_textModelReference;
+            [SerializeField]
+            RawImage m_thumbnail;
 
             [SerializeField, Header("CharacterPermission")]
             Text m_textPermissionAllowed;
@@ -81,8 +83,10 @@ namespace VRM
                 m_textDistributionOther.text = "";
             }
 
-            public void Update(glTF_VRM_Meta meta)
+            public void Update(VRMImporterContext context)
             {
+#if false
+                var meta = context.VRM.extensions.VRM.meta;
                 m_textModelTitle.text = meta.title;
                 m_textModelVersion.text = meta.version;
                 m_textModelAuthor.text = meta.author;
@@ -97,6 +101,26 @@ namespace VRM
 
                 m_textDistributionLicense.text = meta.licenseType.ToString();
                 m_textDistributionOther.text = meta.otherLicenseUrl;
+#else
+                var meta = context.ReadMeta(true);
+
+                m_textModelTitle.text = meta.Title;
+                m_textModelVersion.text = meta.Version;
+                m_textModelAuthor.text = meta.Author;
+                m_textModelContact.text = meta.ContactInformation;
+                m_textModelReference.text = meta.Reference;
+
+                m_textPermissionAllowed.text = meta.AllowedUser.ToString();
+                m_textPermissionViolent.text = meta.ViolentUssage.ToString();
+                m_textPermissionSexual.text = meta.SexualUssage.ToString();
+                m_textPermissionCommercial.text = meta.CommercialUssage.ToString();
+                m_textPermissionOther.text = meta.OtherPermissionUrl;
+
+                m_textDistributionLicense.text = meta.LicenseType.ToString();
+                m_textDistributionOther.text = meta.OtherLicenseUrl;
+
+                m_thumbnail.texture = meta.Thumbnail;
+#endif
             }
         }
         [SerializeField]
@@ -279,33 +303,51 @@ namespace VRM
 
             // GLTFにアクセスできます
             Debug.LogFormat("{0}", context.VRM);
-            m_texts.Update(context.VRM.extensions.VRM.meta);
+            m_texts.Update(context);
 
-            VRMImporter.LoadFromBytes(context);
-            var go = context.Root;
-            Debug.LogFormat("loaded {0}", go.name);
+            // GLTFからモデルを生成します
+            GameObject go = null;
+
+            try
+            {
+                VRMImporter.LoadFromBytes(context);
+                go = context.Root;
+                Debug.LogFormat("loaded {0}", go.name);
+            }
+            catch(Exception ex)
+            {
+                Debug.LogError(ex);
+            }
+
             SetModel(go);
         }
 
         void SetModel(GameObject go)
         {
             // cleanup
-            if (m_loaded != null)
+            var loaded = m_loaded;
+            m_loaded = null;
+
+            if (loaded != null)
             {
-                GameObject.Destroy(m_loaded);
+                Debug.LogFormat("destroy {0}", loaded);
+                GameObject.Destroy(loaded.gameObject);
             }
 
-            m_loaded = go.AddComponent<HumanPoseTransfer>();
+            if (go != null)
+            {
+                m_loaded = go.AddComponent<HumanPoseTransfer>();
 
-            m_loaded.Source = m_src;
-            m_loaded.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
+                m_loaded.Source = m_src;
+                m_loaded.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
 
-            m_lipSync = go.AddComponent<AIUEO>();
-            m_blink = go.AddComponent<Blinker>();
+                m_lipSync = go.AddComponent<AIUEO>();
+                m_blink = go.AddComponent<Blinker>();
 
-            var lookAt = go.GetComponent<VRMLookAtHead>();
-            lookAt.Target = m_target.transform;
-            lookAt.UpdateType = UpdateType.LateUpdate; // after HumanPoseTransfer's setPose
+                var lookAt = go.GetComponent<VRMLookAtHead>();
+                lookAt.Target = m_target.transform;
+                lookAt.UpdateType = UpdateType.LateUpdate; // after HumanPoseTransfer's setPose
+            }
         }
 
         void SetMotion(HumanPoseTransfer src)
