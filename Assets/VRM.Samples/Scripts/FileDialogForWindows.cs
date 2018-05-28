@@ -1,12 +1,14 @@
 ﻿#if UNITY_STANDALONE_WIN
 using System;
 using System.Runtime.InteropServices;
+#endif
 
 
 namespace VRM
 {
     public static class FileDialogForWindows
     {
+#if UNITY_STANDALONE_WIN
         #region GetOpenFileName
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public class OpenFileName
