@@ -66,18 +66,13 @@ namespace VRM
             }
         }
 
-#if VRM_DEVELOP
-        [MenuItem("VRM/Export unitypackage")]
-#endif
-        public static void CreateUnityPackage()
+        public static bool Build(string[] levels)
         {
-            // まずビルドする
-            var levels = new string[] { "Assets/VRM.Samples/Scenes/VRMRuntimeLoaderSample.unity" };
             var buildPath = Path.GetFullPath(Application.dataPath + "/../build/build.exe");
             Debug.LogFormat("{0}", buildPath);
-            var build=BuildPipeline.BuildPlayer(levels, 
-                buildPath, 
-                BuildTarget.StandaloneWindows, 
+            var build = BuildPipeline.BuildPlayer(levels,
+                buildPath,
+                BuildTarget.StandaloneWindows,
                 BuildOptions.None
                 );
 #if UNITY_2018_1_OR_NEWER
@@ -85,6 +80,22 @@ namespace VRM
 #else
             var iSuccess = !string.IsNullOrEmpty(build);
 #endif
+            return iSuccess;
+        }
+
+        public static bool BuildTestScene()
+        {
+            var levels = new string[] { "Assets/VRM.Samples/Scenes/VRMRuntimeLoaderSample.unity" };
+            return Build(levels);
+        }
+
+#if VRM_DEVELOP
+        [MenuItem("VRM/Export unitypackage")]
+#endif
+        public static void CreateUnityPackage()
+        {
+            // まずビルドする
+            var iSuccess=BuildTestScene();
 
             var path = GetPath(PREFIX);
             if (File.Exists(path))
