@@ -277,7 +277,11 @@ namespace VRM
 
         void OnOpenClicked()
         {
+#if UNITY_STANDALONE_WIN
             var path = FileDialogForWindows.FileDialog("open vrm", "vrm");
+#else
+            var path = Application.dataPath + "/default.vrm";
+#endif
             if (string.IsNullOrEmpty(path))
             {
                 return;
