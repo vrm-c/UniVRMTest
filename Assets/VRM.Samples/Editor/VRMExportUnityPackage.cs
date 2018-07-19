@@ -68,14 +68,8 @@ namespace VRM
         }
 #endif
 
-        static string GetPath(string prefix)
+        static string GetPath(string folder, string prefix)
         {
-            var folder = GetDesktop();
-            if (!Directory.Exists(folder))
-            {
-                Directory.CreateDirectory(folder);
-            }
-
             //var date = DateTime.Today.ToString(DATE_FORMAT);
 
             var path = string.Format("{0}/{1}-{2}_{3}.unitypackage",
@@ -97,9 +91,9 @@ namespace VRM
 
             if (Directory.Exists(path))
             {
-                foreach(var child in Directory.GetFileSystemEntries(path))
+                foreach (var child in Directory.GetFileSystemEntries(path))
                 {
-                    foreach(var x in EnumerateFiles(child))
+                    foreach (var x in EnumerateFiles(child))
                     {
                         yield return x;
                     }
@@ -142,15 +136,21 @@ namespace VRM
 #endif
         public static void CreateUnityPackageWithBuild()
         {
-            CreateUnityPackage(true);
+            var folder = GetDesktop();
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+            CreateUnityPackage(folder, true);
         }
 
         public static void CreateUnityPackage()
         {
-            CreateUnityPackage(false);
+            CreateUnityPackage(Path.GetFullPath(Path.Combine(Application.dataPath, "..")), false);
         }
 
-        public static void CreateUnityPackage(bool build)
+        public static void CreateUnityPackage(string folder, bool build)
         {
             if (build)
             {
@@ -158,7 +158,7 @@ namespace VRM
                 var iSuccess = BuildTestScene();
             }
 
-            var path = GetPath(PREFIX);
+            var path = GetPath(folder, PREFIX);
             if (File.Exists(path))
             {
                 Debug.LogErrorFormat("{0} is already exists", path);
@@ -167,11 +167,13 @@ namespace VRM
 
             // 本体
             AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM").ToArray()
-                , path, ExportPackageOptions.Interactive);
+                , path, 
+                ExportPackageOptions.Default);
 
             // サンプル
             AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM.Samples").Concat(EnumerateFiles("Assets/StreamingAssets")).ToArray()
-                , GetPath(PREFIX+"-RuntimeLoaderSample"), ExportPackageOptions.Interactive);
+                , GetPath(folder, PREFIX + "-RuntimeLoaderSample"), 
+                ExportPackageOptions.Default);
 
             Debug.LogFormat("exported: {0}", path);
         }
