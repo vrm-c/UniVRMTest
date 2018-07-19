@@ -303,10 +303,10 @@ namespace VRM
             var context = new VRMImporterContext(path);
 
             // GLB形式でJSONを取得しParseします
-            context.ParseVrm(bytes);
+            context.ParseGlb(bytes);
 
             // GLTFにアクセスできます
-            Debug.LogFormat("{0}", context.VRM);
+            Debug.LogFormat("{0}", context.GLTF);
             m_texts.Update(context);
 
             // GLTFからモデルを生成します

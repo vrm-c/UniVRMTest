@@ -88,7 +88,7 @@ namespace VRM
             var context = new VRMImporterContext(path);
 
             // GLB形式でJSONを取得しParseします
-            context.ParseVrm(bytes);
+            context.ParseGlb(bytes);
 
 
             // metaを取得(todo: thumbnailテクスチャのロード)
