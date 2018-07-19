@@ -132,7 +132,7 @@ namespace VRM
         }
 
 #if VRM_DEVELOP
-        [MenuItem("VRM/Export unitypackage")]
+        [MenuItem(VRMVersion.VRM_VERSION + "/Export unitypackage")]
 #endif
         public static void CreateUnityPackageWithBuild()
         {
@@ -167,12 +167,12 @@ namespace VRM
 
             // 本体
             AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM").ToArray()
-                , path, 
+                , path,
                 ExportPackageOptions.Default);
 
             // サンプル
             AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM.Samples").Concat(EnumerateFiles("Assets/StreamingAssets")).ToArray()
-                , GetPath(folder, PREFIX + "-RuntimeLoaderSample"), 
+                , GetPath(folder, PREFIX + "-RuntimeLoaderSample"),
                 ExportPackageOptions.Default);
 
             Debug.LogFormat("exported: {0}", path);

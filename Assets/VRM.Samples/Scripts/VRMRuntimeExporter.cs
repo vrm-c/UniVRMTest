@@ -86,7 +86,7 @@ public class VRMRuntimeExporter : MonoBehaviour
 #if false
         var path = FileDialogForWindows.SaveDialog("save VRM", Application.dataPath + "/export.vrm");
 #else
-        var path = Application.dataPath + "/export.vrm";
+        var path = Application.dataPath + "/../export.vrm";
 #endif
         if (string.IsNullOrEmpty(path))
         {
