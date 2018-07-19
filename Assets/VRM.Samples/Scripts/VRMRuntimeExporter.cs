@@ -45,7 +45,7 @@ public class VRMRuntimeExporter : MonoBehaviour
         var context = new VRMImporterContext(path);
 
         // GLB形式でJSONを取得しParseします
-        context.ParseVrm(bytes);
+        context.ParseGlb(bytes);
 
 
         // metaを取得(todo: thumbnailテクスチャのロード)
@@ -99,7 +99,7 @@ public class VRMRuntimeExporter : MonoBehaviour
         Debug.LogFormat("export to {0}", path);
     }
 
-    void OnExported(glTF_VRM vrm)
+    void OnExported(UniGLTF.glTF vrm)
     {
         Debug.LogFormat("exported");
     }
