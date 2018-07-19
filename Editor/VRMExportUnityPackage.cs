@@ -140,10 +140,23 @@ namespace VRM
 #if VRM_DEVELOP
         [MenuItem("VRM/Export unitypackage")]
 #endif
+        public static void CreateUnityPackageWithBuild()
+        {
+            CreateUnityPackage(true);
+        }
+
         public static void CreateUnityPackage()
         {
-            // まずビルドする
-            var iSuccess=BuildTestScene();
+            CreateUnityPackage(false);
+        }
+
+        public static void CreateUnityPackage(bool build)
+        {
+            if (build)
+            {
+                // まずビルドする
+                var iSuccess = BuildTestScene();
+            }
 
             var path = GetPath(PREFIX);
             if (File.Exists(path))
