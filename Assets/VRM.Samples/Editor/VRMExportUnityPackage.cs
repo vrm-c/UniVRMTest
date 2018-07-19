@@ -21,6 +21,53 @@ namespace VRM
         const string DATE_FORMAT = "yyyyMMdd";
         const string PREFIX = "UniVRM";
 
+        static string System(string dir, string fileName, string args)
+        {
+            // Start the child process.
+            var p = new System.Diagnostics.Process();
+            // Redirect the output stream of the child process.
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.FileName = fileName;
+            p.StartInfo.Arguments = args;
+            p.StartInfo.WorkingDirectory = dir;
+            if (!p.Start())
+            {
+                return "ERROR";
+            }
+            // Do not wait for the child process to exit before
+            // reading to the end of its redirected stream.
+            // p.WaitForExit();
+            // Read the output stream first and then wait.
+            string output = p.StandardOutput.ReadToEnd();
+            string err = p.StandardError.ReadToEnd();
+            p.WaitForExit();
+
+            if (string.IsNullOrEmpty(output))
+            {
+                return err;
+            }
+            return output;
+        }
+
+        //const string GIT_PATH = "C:\\Program Files\\Git\\mingw64\\bin\\git.exe";
+        const string GIT_PATH = "C:\\Program Files\\Git\\bin\\git.exe";
+
+        static string GetGitHash(string path)
+        {
+            return System(path, "git.exe", "rev-parse HEAD").Trim();
+        }
+
+#if false
+        [MenuItem("VRM/git")]
+        static void X()
+        {
+            var path = Application.dataPath;
+            Debug.LogFormat("{0} => '{1}'", path, GetGitHash(path));
+        }
+#endif
+
         static string GetPath(string prefix)
         {
             var folder = GetDesktop();
@@ -31,10 +78,11 @@ namespace VRM
 
             //var date = DateTime.Today.ToString(DATE_FORMAT);
 
-            var path = string.Format("{0}/{1}-{2}.unitypackage",
+            var path = string.Format("{0}/{1}-{2}_{3}.unitypackage",
                 folder,
                 prefix,
-                VRMVersion.VERSION
+                VRMVersion.VERSION,
+                GetGitHash(Application.dataPath + "/VRM").Substring(0, 4)
                 ).Replace("\\", "/");
 
             return path;
