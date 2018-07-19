@@ -82,7 +82,8 @@ public class VRMRuntimeExporter : MonoBehaviour
     #region Export
     void OnExportClicked()
     {
-#if UNITY_STANDALONE_WIN
+//#if UNITY_STANDALONE_WIN
+#if false
         var path = FileDialogForWindows.SaveDialog("save VRM", Application.dataPath + "/export.vrm");
 #else
         var path = Application.dataPath + "/export.vrm";
@@ -92,13 +93,10 @@ public class VRMRuntimeExporter : MonoBehaviour
             return;
         }
 
-        Export(m_model, path);
-    }
-
-    void Export(GameObject go, string path)
-    {
+        var vrm = VRMExporter.Export(m_model);
+        var bytes = vrm.ToGlbBytes();
+        File.WriteAllBytes(path, bytes);
         Debug.LogFormat("export to {0}", path);
-        VRMExporter.Export(go, path, OnExported);
     }
 
     void OnExported(glTF_VRM vrm)
