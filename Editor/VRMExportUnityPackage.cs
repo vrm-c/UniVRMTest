@@ -155,7 +155,7 @@ namespace VRM
             if (build)
             {
                 // まずビルドする
-                var iSuccess = BuildTestScene();
+                /*var iSuccess = */BuildTestScene();
             }
 
             var path = GetPath(folder, PREFIX);
