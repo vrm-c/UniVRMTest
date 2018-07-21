@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.IO;
+using UniJSON;
 using UnityEngine;
 
 
@@ -14,17 +15,24 @@ namespace VRM
             var context = new VRMImporterContext(path);
             context.ParseGlb(File.ReadAllBytes(path));
             VRMImporter.LoadFromBytes(context);
-            var importJson = context.Json
-                .Replace("UniVRM-0.40", "UniVRM-0.41")
-                .Replace("UniGLTF-1.10", "UniVRM-0.41")
-                .Replace("\"skinRootBone\":-1", "\"skinRootBone\":0")
-                .Trim()
-                ;
 
-            var vrm = VRMExporter.Export(context.Root);
-            var exportJson = vrm.ToJson().Trim();
+            using (new ActionDisposer(() => { GameObject.DestroyImmediate(context.Root); }))
+            {
+                var importJson = JsonParser.Parse(context.Json);
+                importJson.SetValue("/extensions/VRM/exporterVersion", VRMVersion.VRM_VERSION);
+                importJson.SetValue("/asset/generator", "UniGLTF-1.11");
+                importJson.SetValue("/scene", 0);
 
-            Assert.AreEqual(importJson, exportJson);
+                var vrm = VRMExporter.Export(context.Root);
+                var exportJson = JsonParser.Parse(vrm.ToJson());
+
+                foreach (var kv in importJson.Diff(exportJson))
+                {
+                    Debug.Log(kv);
+                }
+
+                Assert.AreEqual(importJson, exportJson);
+            }
         }
     }
 }
