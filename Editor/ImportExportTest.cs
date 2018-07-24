@@ -11,9 +11,9 @@ namespace VRM
         [Test]
         public void ImportExportTest()
         {
-            var path = Path.GetFullPath(Application.dataPath + "/../Models/Alicia_vrm-0.40/AliciaSolid_vrm-0.40.vrm");
+            var path = UniGLTF.UnityPath.FromUnityPath("Models/Alicia_vrm-0.40/AliciaSolid_vrm-0.40.vrm");
             var context = new VRMImporterContext(path);
-            context.ParseGlb(File.ReadAllBytes(path));
+            context.ParseGlb(File.ReadAllBytes(path.FullPath));
             VRMImporter.LoadFromBytes(context);
 
             using (new ActionDisposer(() => { GameObject.DestroyImmediate(context.Root); }))

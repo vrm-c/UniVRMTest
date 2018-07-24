@@ -300,7 +300,7 @@ namespace VRM
             Debug.LogFormat("{0}", path);
             var bytes = File.ReadAllBytes(path);
 
-            var context = new VRMImporterContext(path);
+            var context = new VRMImporterContext(UniGLTF.UnityPath.FromFullpath(path));
 
             // GLB形式でJSONを取得しParseします
             context.ParseGlb(bytes);
