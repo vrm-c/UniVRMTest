@@ -85,7 +85,7 @@ namespace VRM
             var bytes = File.ReadAllBytes(path);
             // なんらかの方法でByte列を得た
 
-            var context = new VRMImporterContext(path);
+            var context = new VRMImporterContext(UniGLTF.UnityPath.FromFullpath(path));
 
             // GLB形式でJSONを取得しParseします
             context.ParseGlb(bytes);
