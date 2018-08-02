@@ -23,7 +23,8 @@ namespace VRM
                 importJson.SetValue("/asset/generator", UniGLTF.UniGLTFVersion.UNIGLTF_VERSION);
                 importJson.SetValue("/scene", 0);
                 importJson.SetValue("/materials/*/doubleSided", false);
-                importJson.SetValue("/accessors/*/normalized", false);                importJson.RemoveValue("/nodes/*/extras");
+                importJson.SetValue("/accessors/*/normalized", false);
+                importJson.RemoveValue("/nodes/*/extras");
                 importJson.SetValue("/bufferViews/12/byteStride", 4);
                 importJson.SetValue("/bufferViews/13/byteStride", 4);
                 importJson.SetValue("/bufferViews/14/byteStride", 4);
