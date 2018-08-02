@@ -20,7 +20,7 @@ namespace VRM
             {
                 var importJson = JsonParser.Parse(context.Json);
                 importJson.SetValue("/extensions/VRM/exporterVersion", VRMVersion.VRM_VERSION);
-                importJson.SetValue("/asset/generator", "UniGLTF-1.12");
+                importJson.SetValue("/asset/generator", UniGLTF.UniGLTFVersion.UNIGLTF_VERSION);
                 importJson.SetValue("/scene", 0);
                 importJson.SetValue("/materials/*/doubleSided", false);
                 importJson.SetValue("/accessors/*/normalized", false);                importJson.RemoveValue("/nodes/*/extras");
