@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.IO;
+using System.Linq;
 using UniJSON;
 using UnityEngine;
 
@@ -61,6 +62,22 @@ namespace VRM
                 }
 
                 Assert.AreEqual(importJson, exportJson);
+            }
+        }
+
+        [Test]
+        public void MeshCoyTest()
+        {
+            var path = UniGLTF.UnityPath.FromUnityPath("Models/Alicia_vrm-0.40/AliciaSolid_vrm-0.40.vrm");
+            var context = new VRMImporterContext(path);
+            context.ParseGlb(File.ReadAllBytes(path.FullPath));
+            VRMImporter.LoadFromBytes(context);
+
+            foreach (var mesh in context.Meshes)
+            {
+                var src = mesh.Mesh;
+                var dst = src.Copy(true);
+                MeshTests.MeshEquals(src, dst);
             }
         }
     }
