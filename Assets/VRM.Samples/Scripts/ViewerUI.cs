@@ -298,32 +298,14 @@ namespace VRM
             }
 
             Debug.LogFormat("{0}", path);
-            var bytes = File.ReadAllBytes(path);
+            var context = new VRMImporterContext();
 
-            var context = new VRMImporterContext(UniGLTF.UnityPath.FromFullpath(path));
+            var file = File.ReadAllBytes(path);
+            context.ParseGlb(file);
 
-            // GLB形式でJSONを取得しParseします
-            context.ParseGlb(bytes);
+            //UniJSON.JsonParser.Parse(context.Json);
 
-            // GLTFにアクセスできます
-            Debug.LogFormat("{0}", context.GLTF);
-            m_texts.Update(context);
-
-            // GLTFからモデルを生成します
-            GameObject go = null;
-
-            try
-            {
-                VRMImporter.LoadFromBytes(context);
-                go = context.Root;
-                Debug.LogFormat("loaded {0}", go.name);
-            }
-            catch(Exception ex)
-            {
-                Debug.LogError(ex);
-            }
-
-            SetModel(go);
+            VRMImporter.LoadVrmAsync(context, SetModel);
         }
 
         void SetModel(GameObject go)
