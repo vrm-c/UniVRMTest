@@ -83,25 +83,8 @@ namespace VRM
                 m_textDistributionOther.text = "";
             }
 
-            public void Update(VRMImporterContext context)
+            public void UpdateMeta(VRMImporterContext context)
             {
-#if false
-                var meta = context.VRM.extensions.VRM.meta;
-                m_textModelTitle.text = meta.title;
-                m_textModelVersion.text = meta.version;
-                m_textModelAuthor.text = meta.author;
-                m_textModelContact.text = meta.contactInformation;
-                m_textModelReference.text = meta.reference;
-
-                m_textPermissionAllowed.text = meta.allowedUser.ToString();
-                m_textPermissionViolent.text = meta.violentUssage.ToString();
-                m_textPermissionSexual.text = meta.sexualUssage.ToString();
-                m_textPermissionCommercial.text = meta.commercialUssage.ToString();
-                m_textPermissionOther.text = meta.otherPermissionUrl;
-
-                m_textDistributionLicense.text = meta.licenseType.ToString();
-                m_textDistributionOther.text = meta.otherLicenseUrl;
-#else
                 var meta = context.ReadMeta(true);
 
                 m_textModelTitle.text = meta.Title;
@@ -120,7 +103,6 @@ namespace VRM
                 m_textDistributionOther.text = meta.OtherLicenseUrl;
 
                 m_thumbnail.texture = meta.Thumbnail;
-#endif
             }
         }
         [SerializeField]
@@ -303,6 +285,7 @@ namespace VRM
             var file = File.ReadAllBytes(path);
             context.ParseGlb(file);
 
+            m_texts.UpdateMeta(context);
             //UniJSON.JsonParser.Parse(context.Json);
 
             VRMImporter.LoadVrmAsync(context, SetModel);
