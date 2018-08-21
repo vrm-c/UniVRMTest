@@ -1,5 +1,6 @@
 ﻿#if UNITY_STANDALONE_WIN
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 #endif
@@ -55,11 +56,18 @@ namespace VRM
         {
             return string.Join("\0", filters) + "\0";
         }
-        public static string FileDialog(string title, string extension)
+        public static string FileDialog(string title, params string[] extensions)
         {
             OpenFileName ofn = new OpenFileName();
             ofn.structSize = Marshal.SizeOf(ofn);
-            ofn.filter = Filter("All Files", "*.*", extension, "*" + extension);
+
+            var filters = new List<string>();
+            filters.Add("All Files"); filters.Add("*.*");
+            foreach(var ext in extensions)
+            {
+                filters.Add(ext); filters.Add("*" + ext);
+            }
+            ofn.filter = Filter(filters.ToArray());
             ofn.filterIndex = 2;
             ofn.file = new string(new char[256]);
             ofn.maxFile = ofn.file.Length;
