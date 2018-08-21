@@ -260,7 +260,7 @@ namespace VRM
         void OnOpenClicked()
         {
 #if UNITY_STANDALONE_WIN
-            var path = FileDialogForWindows.FileDialog("open vrm", "vrm");
+            var path = FileDialogForWindows.FileDialog("open VRM", "vrm", "bvh");
 #else
             var path = Application.dataPath + "/default.vrm";
 #endif
@@ -269,7 +269,18 @@ namespace VRM
                 return;
             }
 
-            LoadModel(path);
+            switch (Path.GetExtension(path).ToLower())
+            {
+                case ".gltf":
+                case ".glb":
+                case ".vrm":
+                    LoadModel(path);
+                    break;
+
+                case ".bvh":
+                    LoadMotion(path);
+                    break;
+            }
         }
 
         void LoadModel(string path)
