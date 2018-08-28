@@ -260,7 +260,7 @@ namespace VRM
         void OnOpenClicked()
         {
 #if UNITY_STANDALONE_WIN
-            var path = FileDialogForWindows.FileDialog("open VRM", "vrm", "bvh");
+            var path = FileDialogForWindows.FileDialog("open VRM", "vrm", "glb", "bvh");
 #else
             var path = Application.dataPath + "/default.vrm";
 #endif
@@ -269,7 +269,8 @@ namespace VRM
                 return;
             }
 
-            switch (Path.GetExtension(path).ToLower())
+            var ext = Path.GetExtension(path).ToLower();
+            switch (ext)
             {
                 case ".gltf":
                 case ".glb":
@@ -291,15 +292,42 @@ namespace VRM
             }
 
             Debug.LogFormat("{0}", path);
-            var context = new VRMImporterContext();
+            var ext = Path.GetExtension(path).ToLower();
+            switch (ext)
+            {
+                case ".vrm":
+                    {
+                        var context = new VRMImporterContext();
 
-            var file = File.ReadAllBytes(path);
-            context.ParseGlb(file);
+                        var file = File.ReadAllBytes(path);
+                        context.ParseGlb(file);
 
-            m_texts.UpdateMeta(context);
-            //UniJSON.JsonParser.Parse(context.Json);
+                        m_texts.UpdateMeta(context);
+                        //UniJSON.JsonParser.Parse(context.Json);
 
-            VRMImporter.LoadVrmAsync(context, SetModel);
+                        VRMImporter.LoadVrmAsync(context, SetModel);
+
+                        break;
+                    }
+
+                case ".glb":
+                    {
+                        var context = new UniGLTF.ImporterContext();
+
+                        var file = File.ReadAllBytes(path);
+                        context. ParseGlb(file);
+
+                        UniGLTF.gltfImporter.Load(context);
+                        context.ShowMeshes();
+                        SetModel(context.Root);
+
+                        break;
+                    }
+
+                default:
+                    Debug.LogWarningFormat("unknown file type: {0}", path);
+                    break;
+            }
         }
 
         void SetModel(GameObject go)
@@ -316,17 +344,25 @@ namespace VRM
 
             if (go != null)
             {
-                m_loaded = go.AddComponent<HumanPoseTransfer>();
-
-                m_loaded.Source = m_src;
-                m_loaded.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
-
-                m_lipSync = go.AddComponent<AIUEO>();
-                m_blink = go.AddComponent<Blinker>();
-
                 var lookAt = go.GetComponent<VRMLookAtHead>();
-                lookAt.Target = m_target.transform;
-                lookAt.UpdateType = UpdateType.LateUpdate; // after HumanPoseTransfer's setPose
+                if (lookAt != null)
+                {
+                    m_loaded = go.AddComponent<HumanPoseTransfer>();
+                    m_loaded.Source = m_src;
+                    m_loaded.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
+
+                    m_lipSync = go.AddComponent<AIUEO>();
+                    m_blink = go.AddComponent<Blinker>();
+
+                    lookAt.Target = m_target.transform;
+                    lookAt.UpdateType = UpdateType.LateUpdate; // after HumanPoseTransfer's setPose
+                }
+
+                var animation = go.GetComponent<Animation>();
+                if (animation && animation.clip!=null)
+                {
+                    animation.Play(animation.clip.name);
+                }
             }
         }
 
