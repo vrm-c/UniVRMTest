@@ -82,7 +82,7 @@ namespace VRM
             return path;
         }
 
-        static IEnumerable<string> EnumerateFiles(string path)
+        static IEnumerable<string> EnumerateFiles(string path, Func<string, bool> isExclude = null)
         {
             if (Path.GetFileName(path).StartsWith(".git"))
             {
@@ -101,10 +101,17 @@ namespace VRM
             }
             else
             {
-                if (Path.GetExtension(path).ToLower() != ".meta")
+                if (Path.GetExtension(path).ToLower() == ".meta")
                 {
-                    yield return path.Replace("\\", "/");
+                    yield break;
                 }
+
+                if (isExclude != null && isExclude(path))
+                {
+                    yield break;
+                }
+
+                yield return path.Replace("\\", "/");
             }
         }
 
@@ -150,6 +157,43 @@ namespace VRM
             CreateUnityPackage(Path.GetFullPath(Path.Combine(Application.dataPath, "..")), false);
         }
 
+        static bool EndsWith(string path, params string[] exts)
+        {
+            foreach(var ext in exts)
+            {
+                if (path.EndsWith(ext))
+                {
+                    return true;
+                }
+                if(path.EndsWith(ext + ".meta"))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        static bool ExcludeCsProj(string path)
+        {
+            /*
+            if(EndsWith(path, "csproj", "sln", "csproj.user", "psess", "bin", "obj", "vsp", "vspx"))
+            {
+                return true;
+            }
+            */
+            if (EndsWith("/UniJSON/Profiling.meta"))
+            {
+                return true;
+            }
+            if (path.Contains("/UniJSON/Profiling/"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static void CreateUnityPackage(string folder, bool build)
         {
             if (build)
@@ -166,7 +210,7 @@ namespace VRM
             }
 
             // 本体
-            AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM").ToArray()
+            AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM", ExcludeCsProj).ToArray()
                 , path,
                 ExportPackageOptions.Default);
 
