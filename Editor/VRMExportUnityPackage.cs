@@ -93,7 +93,7 @@ namespace VRM
             {
                 foreach (var child in Directory.GetFileSystemEntries(path))
                 {
-                    foreach (var x in EnumerateFiles(child))
+                    foreach (var x in EnumerateFiles(child.Replace("\\", "/")))
                     {
                         yield return x;
                     }
