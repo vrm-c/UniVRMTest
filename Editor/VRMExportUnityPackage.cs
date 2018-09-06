@@ -82,9 +82,16 @@ namespace VRM
             return path;
         }
 
-        static IEnumerable<string> EnumerateFiles(string path, Func<string, bool> isExclude = null)
+        static IEnumerable<string> EnumerateFiles(string path, Func<string, bool> isExclude=null)
         {
+            path = path.Replace("\\", "/");
+
             if (Path.GetFileName(path).StartsWith(".git"))
+            {
+                yield break;
+            }
+
+            if (isExclude != null && isExclude(path))
             {
                 yield break;
             }
@@ -93,7 +100,7 @@ namespace VRM
             {
                 foreach (var child in Directory.GetFileSystemEntries(path))
                 {
-                    foreach (var x in EnumerateFiles(child.Replace("\\", "/")))
+                    foreach (var x in EnumerateFiles(child, isExclude))
                     {
                         yield return x;
                     }
@@ -106,12 +113,7 @@ namespace VRM
                     yield break;
                 }
 
-                if (isExclude != null && isExclude(path))
-                {
-                    yield break;
-                }
-
-                yield return path.Replace("\\", "/");
+                yield return path;
             }
         }
 
@@ -182,11 +184,11 @@ namespace VRM
                 return true;
             }
             */
-            if (EndsWith("/UniJSON/Profiling.meta"))
+            if (path.EndsWith("/UniJSON/Profiling.meta"))
             {
                 return true;
             }
-            if (path.Contains("/UniJSON/Profiling/"))
+            if (path.EndsWith("/UniJSON/Profiling"))
             {
                 return true;
             }
@@ -210,9 +212,15 @@ namespace VRM
             }
 
             // 本体
-            AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM", ExcludeCsProj).ToArray()
-                , path,
-                ExportPackageOptions.Default);
+            {
+                var files = EnumerateFiles("Assets/VRM", ExcludeCsProj).ToArray();
+                Debug.LogFormat("{0}", string.Join("", files.Select((x, i) => string.Format("[{0:##0}] {1}\n", i, x)).ToArray()));
+                return;
+
+                AssetDatabase.ExportPackage(files
+                    , path,
+                    ExportPackageOptions.Default);
+            }
 
             // サンプル
             AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM.Samples").Concat(EnumerateFiles("Assets/StreamingAssets")).ToArray()
