@@ -215,17 +215,17 @@ namespace VRM
             {
                 var files = EnumerateFiles("Assets/VRM", ExcludeCsProj).ToArray();
                 Debug.LogFormat("{0}", string.Join("", files.Select((x, i) => string.Format("[{0:##0}] {1}\n", i, x)).ToArray()));
-                return;
-
                 AssetDatabase.ExportPackage(files
                     , path,
                     ExportPackageOptions.Default);
             }
 
             // サンプル
-            AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM.Samples").Concat(EnumerateFiles("Assets/StreamingAssets")).ToArray()
-                , GetPath(folder, PREFIX + "-RuntimeLoaderSample"),
-                ExportPackageOptions.Default);
+            {
+                AssetDatabase.ExportPackage(EnumerateFiles("Assets/VRM.Samples").Concat(EnumerateFiles("Assets/StreamingAssets")).ToArray()
+                    , GetPath(folder, PREFIX + "-RuntimeLoaderSample"),
+                    ExportPackageOptions.Default);
+            }
 
             Debug.LogFormat("exported: {0}", path);
         }
