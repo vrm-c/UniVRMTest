@@ -6,6 +6,7 @@ namespace VRM
 {
     public class VRMMaterialTests
     {
+        /*
         [Test]
         public void ExportTest()
         {
@@ -66,5 +67,6 @@ namespace VRM
                 Assert.True(exported.doubleSided);
             }
         }
+    */
     }
 }
