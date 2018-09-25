@@ -12,7 +12,7 @@ namespace VRM
         public void ImportExportTest()
         {
             var path = UniGLTF.UnityPath.FromUnityPath("Models/Alicia_vrm-0.40/AliciaSolid_vrm-0.40.vrm");
-            var context = new VRMImporterContext(path);
+            var context = new VRMImporterContext();
             context.ParseGlb(File.ReadAllBytes(path.FullPath));
             VRMImporter.LoadFromBytes(context);
 
@@ -75,7 +75,7 @@ namespace VRM
         public void MeshCoyTest()
         {
             var path = UniGLTF.UnityPath.FromUnityPath("Models/Alicia_vrm-0.40/AliciaSolid_vrm-0.40.vrm");
-            var context = new VRMImporterContext(path);
+            var context = new VRMImporterContext();
             context.ParseGlb(File.ReadAllBytes(path.FullPath));
             VRMImporter.LoadFromBytes(context);
 
