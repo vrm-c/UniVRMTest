@@ -192,6 +192,14 @@ namespace VRM
             {
                 return true;
             }
+            if (path.EndsWith("/UniGLTF/doc"))
+            {
+                return true;
+            }
+            if (path.EndsWith("/UniHumanoid/doc"))
+            {
+                return true;
+            }
 
             return false;
         }
