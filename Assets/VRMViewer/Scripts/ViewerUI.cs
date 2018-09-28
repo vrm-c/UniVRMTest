@@ -97,8 +97,9 @@ namespace VRMViewer
             _openBVH.onClick.AddListener(OnOpenClickedBVH);
 
             // Load initial motion
-            string path = System.IO.Directory.GetCurrentDirectory() + "/Assets/StreamingAssets/test.txt";
-            if(File.Exists(path))
+            string path = Application.streamingAssetsPath + "/test.txt";
+
+            if (File.Exists(path))
             {
                 LoadMotion(path);
                 _bvhPathSaved = path;

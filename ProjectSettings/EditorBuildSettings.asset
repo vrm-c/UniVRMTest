@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/VRMViewer/Scenes/VRMViewer.unity
+    guid: 85df9aae94ba18845871d426dc15ed1b
