@@ -33,7 +33,7 @@ An application that users can view VRM models.
 * [x] モデル情報表示 (Model information)
 * [x] コマンドライン引数 (Command line arguments)
 * [x] T-Pose・モーションスイッチ (T-Pose / Motion switch)
-* [ ] 目線・正面・ターゲット・カメラ目線 (Eyes look straight ahead / look at camera / look at camera)
+* [ ] 目線・正面・ターゲット・カメラ目線 (The model looks straight ahead / looks at target / looks at camera)
 * BlendShape
     * [x] AIUEO
     * [x] AutoBlink 
