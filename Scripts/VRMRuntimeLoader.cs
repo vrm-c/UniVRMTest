@@ -103,8 +103,8 @@ namespace VRM
             }
             else
             {
-                VRMImporter.LoadFromBytes(context);
-                OnLoaded(context.Root);
+                context.Load();
+                OnLoaded(context);
             }
         }
 
@@ -127,15 +127,20 @@ namespace VRM
             var bytes = File.ReadAllBytes(path);
             // なんらかの方法でByte列を得た
 
+            var context = new VRMImporterContext();
+
+            // GLB形式でJSONを取得しParseします
+            context.ParseGlb(bytes);
+
             if (m_loadAsync)
             {
                 // ローカルファイルシステムからロードします
-                VRMImporter.LoadVrmAsync(bytes, OnLoaded);
+                LoadAsync(context);
             }
             else
             {
-                var root=VRMImporter.LoadFromBytes(bytes);
-                OnLoaded(root);
+                context.Load();
+                OnLoaded(context);
             }
 
 #else
@@ -158,10 +163,11 @@ namespace VRM
         {
 #if true
             var now = Time.time;
-            VRMImporter.LoadVrmAsync(context, go=> {
+            context.LoadAsync(_ =>
+            {
                 var delta = Time.time - now;
-                Debug.LogFormat("LoadVrmAsync {0:0.0} seconds", delta);
-                OnLoaded(go);
+                Debug.LogFormat("LoadAsync {0:0.0} seconds", delta);
+                OnLoaded(context);
             });
 #else
             // ローカルファイルシステムからロードします
@@ -182,10 +188,14 @@ namespace VRM
 #endif
         }
 
-        void OnLoaded(GameObject root)
+        void OnLoaded(VRMImporterContext context)
         {
+            var root = context.Root;
             root.transform.SetParent(transform, false);
 
+            //メッシュを表示します
+            context.ShowMeshes();
+            
             // add motion
             var humanPoseTransfer = root.AddComponent<UniHumanoid.HumanPoseTransfer>();
             if (m_target != null)
@@ -199,11 +209,10 @@ namespace VRM
         void LoadBvh(string path)
         {
             Debug.LogFormat("ImportBvh: {0}", path);
-            var context = new UniHumanoid.ImporterContext
-            {
-                Path = path
-            };
-            UniHumanoid.BvhImporter.Import(context);
+            var context = new UniHumanoid.BvhImporterContext();
+
+            context.Parse(path);
+            context.Load();
 
             if (m_source != null)
             {
