@@ -76,31 +76,17 @@ namespace VRM
             return File.ReadAllBytes(path);
         }
 
-        async static Task<GameObject> LoadAsync(Byte[] bytes)
+        async static Task<VRMImporterContext> LoadAsync(Byte[] bytes)
         {
             var context = new VRMImporterContext();
 
             // GLB形式でJSONを取得しParseします
             context.ParseGlb(bytes);
 
-            try
-            {
-                // ParseしたJSONをシーンオブジェクトに変換していく
-                await context.LoadAsyncTask();
+            // ParseしたJSONをシーンオブジェクトに変換していく
+            await context.LoadAsyncTask();
 
-                // T-Poseのモデルを表示したくない場合、ShowMeshesする前に準備する
-                // ロード後に表示する
-                context.ShowMeshes();
-
-                return context.Root;
-            }
-            catch(Exception ex)
-            {
-                Debug.LogError(ex);
-                // 関連するリソースを破棄する
-                context.Destroy(true);
-                throw;
-            }
+            return context;
         }
 
         /// <summary>
@@ -118,11 +104,26 @@ namespace VRM
                 return;
             }
 
+          
+            var context = new VRMImporterContext();
+
             var bytes = await ReadBytesAsync(path);
 
-            var go = await LoadAsync(bytes);
+            // GLB形式でJSONを取得しParseします
+            context.ParseGlb(bytes);
 
-            OnLoaded(go);
+            // metaを取得(todo: thumbnailテクスチャのロード)
+            var meta = context.ReadMeta();
+            Debug.LogFormat("meta: title:{0}", meta.Title);
+
+            // ParseしたJSONをシーンオブジェクトに変換していく
+            var now = Time.time;
+            await context.LoadAsyncTask();
+
+            var delta = Time.time - now;
+            Debug.LogFormat("LoadVrmAsync {0:0.0} seconds", delta);
+            OnLoaded(context);
+          
         }
 
         void LoadBVHClicked()
@@ -138,9 +139,13 @@ namespace VRM
 #endif
         }
 
-        void OnLoaded(GameObject root)
+        void OnLoaded(VRMImporterContext context)
         {
+            var root = context.Root;
             root.transform.SetParent(transform, false);
+
+            //メッシュを表示します
+            context.ShowMeshes();
 
             // add motion
             var humanPoseTransfer = root.AddComponent<UniHumanoid.HumanPoseTransfer>();
@@ -155,10 +160,11 @@ namespace VRM
         void LoadBvh(string path)
         {
             Debug.LogFormat("ImportBvh: {0}", path);
-            var context = new UniHumanoid.ImporterContext
-            {
-                Path = path
-            };
+          
+            var context = new UniHumanoid.BvhImporterContext();
+
+            context.Parse(path);
+          
             context.Load();
 
             if (m_source != null)
