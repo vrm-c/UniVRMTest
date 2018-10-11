@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 using UnityEngine;
-#if (NET_4_6 && UNITY_2018_1_OR_NEWER)
+#if (NET_4_6 && UNITY_2017_1_OR_NEWER)
 using System.Threading.Tasks;
 #endif
 
@@ -26,7 +26,7 @@ namespace VRM
         [SerializeField, Header("runtime")]
         VRMFirstPerson m_firstPerson;
 
-#if (NET_4_6 && UNITY_2018_1_OR_NEWER)
+#if (NET_4_6 && UNITY_2017_1_OR_NEWER)
         VRMBlendShapeProxy m_blendShape;
 
         void SetupTarget()
@@ -91,12 +91,12 @@ namespace VRM
                 return;
             }
 
-            var context = new VRMImporterContext(path);
+            var context = new VRMImporterContext();
 
             var bytes = await ReadBytesAsync(path);
 
             // GLB形式でJSONを取得しParseします
-            context.ParseVrm(bytes);
+            context.ParseGlb(bytes);
 
             // metaを取得(todo: thumbnailテクスチャのロード)
             var meta = context.ReadMeta();
@@ -104,7 +104,10 @@ namespace VRM
 
             // ParseしたJSONをシーンオブジェクトに変換していく
             var now = Time.time;
-            var go = await VRMImporter.LoadVrmAsync(context);
+
+            await context.LoadAsyncTask();
+            context.ShowMeshes();
+            var go = context.Root;
 
             var delta = Time.time - now;
             Debug.LogFormat("LoadVrmAsync {0:0.0} seconds", delta);
