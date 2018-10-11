@@ -76,17 +76,31 @@ namespace VRM
             return File.ReadAllBytes(path);
         }
 
-        async static Task<VRMImporterContext> LoadAsync(Byte[] bytes)
+        async static Task<GameObject> LoadAsync(Byte[] bytes)
         {
             var context = new VRMImporterContext();
 
             // GLB形式でJSONを取得しParseします
             context.ParseGlb(bytes);
 
-            // ParseしたJSONをシーンオブジェクトに変換していく
-            await context.LoadAsyncTask();
+            try
+            {
+                // ParseしたJSONをシーンオブジェクトに変換していく
+                await context.LoadAsyncTask();
 
-            return context;
+                // T-Poseのモデルを表示したくない場合、ShowMeshesする前に準備する
+                // ロード後に表示する
+                context.ShowMeshes();
+
+                return context.Root;
+            }
+            catch(Exception ex)
+            {
+                Debug.LogError(ex);
+                // 関連するリソースを破棄する
+                context.Destroy(true);
+                throw;
+            }
         }
 
         /// <summary>
@@ -106,11 +120,9 @@ namespace VRM
 
             var bytes = await ReadBytesAsync(path);
 
-            var context = await LoadAsync(bytes);
+            var go = await LoadAsync(bytes);
 
-            context.ShowMeshes();
-
-            OnLoaded(context.Root);
+            OnLoaded(go);
         }
 
         void LoadBVHClicked()
