@@ -76,6 +76,19 @@ namespace VRM
             return File.ReadAllBytes(path);
         }
 
+        async static Task<VRMImporterContext> LoadAsync(Byte[] bytes)
+        {
+            var context = new VRMImporterContext();
+
+            // GLB形式でJSONを取得しParseします
+            context.ParseGlb(bytes);
+
+            // ParseしたJSONをシーンオブジェクトに変換していく
+            await context.LoadAsyncTask();
+
+            return context;
+        }
+
         /// <summary>
         /// Taskで非同期にロードする例
         /// </summary>
@@ -91,27 +104,13 @@ namespace VRM
                 return;
             }
 
-            var context = new VRMImporterContext();
-
             var bytes = await ReadBytesAsync(path);
 
-            // GLB形式でJSONを取得しParseします
-            context.ParseGlb(bytes);
-
-            // metaを取得(todo: thumbnailテクスチャのロード)
-            var meta = context.ReadMeta();
-            Debug.LogFormat("meta: title:{0}", meta.Title);
-
-            // ParseしたJSONをシーンオブジェクトに変換していく
-            var now = Time.time;
-            await context.LoadAsyncTask();
+            var context = await LoadAsync(bytes);
 
             context.ShowMeshes();
-            var go = context.Root;
 
-            var delta = Time.time - now;
-            Debug.LogFormat("LoadVrmAsync {0:0.0} seconds", delta);
-            OnLoaded(go);
+            OnLoaded(context.Root);
         }
 
         void LoadBVHClicked()
