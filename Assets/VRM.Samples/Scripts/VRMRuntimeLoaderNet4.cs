@@ -104,8 +104,8 @@ namespace VRM
 
             // ParseしたJSONをシーンオブジェクトに変換していく
             var now = Time.time;
-
             await context.LoadAsyncTask();
+
             context.ShowMeshes();
             var go = context.Root;
 
@@ -148,7 +148,7 @@ namespace VRM
             {
                 Path = path
             };
-            UniHumanoid.BvhImporter.Import(context);
+            context.Load();
 
             if (m_source != null)
             {
