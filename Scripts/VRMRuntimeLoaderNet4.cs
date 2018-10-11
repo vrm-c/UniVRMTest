@@ -91,12 +91,12 @@ namespace VRM
                 return;
             }
 
-            var context = new VRMImporterContext(path);
+            var context = new VRMImporterContext();
 
             var bytes = await ReadBytesAsync(path);
 
             // GLB形式でJSONを取得しParseします
-            context.ParseVrm(bytes);
+            context.ParseGlb(bytes);
 
             // metaを取得(todo: thumbnailテクスチャのロード)
             var meta = context.ReadMeta();
@@ -104,11 +104,11 @@ namespace VRM
 
             // ParseしたJSONをシーンオブジェクトに変換していく
             var now = Time.time;
-            var go = await VRMImporter.LoadVrmAsync(context);
+            await context.LoadAsyncTask();
 
             var delta = Time.time - now;
             Debug.LogFormat("LoadVrmAsync {0:0.0} seconds", delta);
-            OnLoaded(go);
+            OnLoaded(context);
         }
 
         void LoadBVHClicked()
@@ -124,9 +124,13 @@ namespace VRM
 #endif
         }
 
-        void OnLoaded(GameObject root)
+        void OnLoaded(VRMImporterContext context)
         {
+            var root = context.Root;
             root.transform.SetParent(transform, false);
+
+            //メッシュを表示します
+            context.ShowMeshes();
 
             // add motion
             var humanPoseTransfer = root.AddComponent<UniHumanoid.HumanPoseTransfer>();
@@ -141,11 +145,10 @@ namespace VRM
         void LoadBvh(string path)
         {
             Debug.LogFormat("ImportBvh: {0}", path);
-            var context = new UniHumanoid.ImporterContext
-            {
-                Path = path
-            };
-            UniHumanoid.BvhImporter.Import(context);
+            var context = new UniHumanoid.BvhImporterContext();
+
+            context.Parse(path);
+            context.Load();
 
             if (m_source != null)
             {
