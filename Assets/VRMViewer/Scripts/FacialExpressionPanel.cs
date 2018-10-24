@@ -48,7 +48,7 @@ namespace VRMViewer
 
         public GameObject VrmModel { set { _vrmModel = value; } }
 
-        private void Update()
+        private void LateUpdate()
         {
             ExpressionOperation();
         }
@@ -97,10 +97,11 @@ namespace VRMViewer
             var proxy = vrmModel.GetComponent<VRMBlendShapeProxy>();
 
             // Check the number of valid expressions
-            foreach(var clip in proxy.BlendShapeAvatar.Clips)
+            foreach (var clip in proxy.BlendShapeAvatar.Clips)
             {
-                var expression_nums = clip.Values.ToArray().Length;
-                if (expression_nums > 0)
+                var expressionNums = clip.Values.ToArray().Length;
+                var expressionMaterialNums = clip.MaterialValues.ToArray().Length;
+                if ((expressionNums > 0) || (expressionMaterialNums > 0))
                 {
                     _validExpNum = _validExpNum + 1;
                 }
@@ -115,7 +116,8 @@ namespace VRMViewer
             foreach(var clip in proxy.BlendShapeAvatar.Clips)
             {
                 var expressionNums = clip.Values.ToArray().Length;
-                if (expressionNums > 0)
+                var expressionMaterialNums = clip.MaterialValues.ToArray().Length;
+                if ((expressionNums > 0) || (expressionMaterialNums > 0))
                 {
                     var expressionString = clip.name;
                     var expressionName = expressionString.Substring(expressionString.LastIndexOf('.') + 1);
