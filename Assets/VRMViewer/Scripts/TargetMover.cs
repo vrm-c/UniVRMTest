@@ -46,11 +46,13 @@ namespace VRMViewer
         private GameObject _bvhGameObject = null;
         private Transform _leftEye;
         private Transform _rightEye;
+        private bool _lookAtBone;
 
         public GameObject VrmModel { set { _vrmModel = value; } }
         public GameObject BvhGameObject { set { _bvhGameObject = value; } }
         public Transform LeftEye { set { _leftEye = value; } }
         public Transform RightEye { set { _rightEye = value; } }
+        public bool LookAtBone { set { _lookAtBone = value; } }
 
         private void Start()
         {
@@ -72,8 +74,21 @@ namespace VRMViewer
                 if (_vrmModel != null)
                 {
                     // Make eyes static
-                    _vrmModel.GetComponent<VRMLookAtBoneApplyer>().LeftEye.Transform = null;
-                    _vrmModel.GetComponent<VRMLookAtBoneApplyer>().RightEye.Transform = null;
+                    if (_lookAtBone)
+                    {
+                        _vrmModel.GetComponent<VRMLookAtBoneApplyer>().LeftEye.Transform = null;
+                        _vrmModel.GetComponent<VRMLookAtBoneApplyer>().RightEye.Transform = null;
+                    }
+                    else
+                    {
+                        _vrmModel.GetComponent<VRMLookAtBlendShapeApplyer>().m_notSetValueApply = true;
+
+                        var blednShapeProxy = _vrmModel.GetComponent<VRMBlendShapeProxy>();
+                        blednShapeProxy.SetValue(BlendShapePreset.LookUp, 0.0f);
+                        blednShapeProxy.SetValue(BlendShapePreset.LookDown, 0.0f);
+                        blednShapeProxy.SetValue(BlendShapePreset.LookLeft, 0.0f);
+                        blednShapeProxy.SetValue(BlendShapePreset.LookRight, 0.0f);
+                    }
                 }
             }
 
@@ -114,17 +129,27 @@ namespace VRMViewer
         {
             Toggle eyeOperationModeLookAtSphere = _lookAtSphereToggle;
 
-            if (eyeOperationModeLookAtSphere.isOn) {
-
+            if (eyeOperationModeLookAtSphere.isOn)
+            {
                 if (_vrmModel != null && _vrmModel.GetComponent<VRMLookAtHead>().Target == _targetCamera.transform)
                 {
                     _vrmModel.GetComponent<VRMLookAtHead>().Target = _targetSphere.transform;
                 }
 
-                if (_vrmModel != null && (_vrmModel.GetComponent<VRMLookAtBoneApplyer>().LeftEye.Transform == null || _vrmModel.GetComponent<VRMLookAtBoneApplyer>().RightEye.Transform == null))
+                if (_lookAtBone)
                 {
-                    _vrmModel.GetComponent<VRMLookAtBoneApplyer>().LeftEye.Transform = _leftEye;
-                    _vrmModel.GetComponent<VRMLookAtBoneApplyer>().RightEye.Transform = _rightEye;
+                    if (_vrmModel != null && (_vrmModel.GetComponent<VRMLookAtBoneApplyer>().LeftEye.Transform == null || _vrmModel.GetComponent<VRMLookAtBoneApplyer>().RightEye.Transform == null))
+                    {
+                        _vrmModel.GetComponent<VRMLookAtBoneApplyer>().LeftEye.Transform = _leftEye;
+                        _vrmModel.GetComponent<VRMLookAtBoneApplyer>().RightEye.Transform = _rightEye;
+                    }
+                }
+                else
+                {
+                    if (_vrmModel != null && _vrmModel.GetComponent<VRMLookAtBlendShapeApplyer>().m_notSetValueApply)
+                    {
+                        _vrmModel.GetComponent<VRMLookAtBlendShapeApplyer>().m_notSetValueApply = false;
+                    }
                 }
 
                 _closeGameObject.EnableSphere();
