@@ -86,6 +86,8 @@ namespace VRMViewer
         private bool _pause;
         // Initial_BVH_Crush_flag
         private bool _bvhLoadingTrigger = false;
+        // VRMLookAtBone flag
+        private bool _lookAtBoneFlag = false;
         #endregion
 
         private void Start()
@@ -231,11 +233,27 @@ namespace VRMViewer
                 // Set up Model
                 SetModel(_vrmModel);
                 _facialExpressionPanel.CreateDynamicObject(_vrmModel);
-                _leftEyeSaved = _vrmModel.GetComponent<VRMLookAtBoneApplyer>().LeftEye.Transform;
-                _rightEyeSaved = _vrmModel.GetComponent<VRMLookAtBoneApplyer>().RightEye.Transform;
 
-                // Send VRM and Eye Transform
-                _informationUpdate.SetVRM(_vrmModel, _leftEyeSaved, _rightEyeSaved);
+                // Check the model's LookAt type
+                if (_vrmModel.GetComponent<VRMLookAtBoneApplyer>() != null)
+                {
+                    _leftEyeSaved = _vrmModel.GetComponent<VRMLookAtBoneApplyer>().LeftEye.Transform;
+                    _rightEyeSaved = _vrmModel.GetComponent<VRMLookAtBoneApplyer>().RightEye.Transform;
+                    _lookAtBoneFlag = true;
+
+                    // Send information
+                    _informationUpdate.SetVRM(_vrmModel);
+                    _informationUpdate.SetBoneEyeTransform(_leftEyeSaved, _rightEyeSaved);
+                    _informationUpdate.SetLookAtType(_lookAtBoneFlag);
+                }
+                else if(_vrmModel.GetComponent<VRMLookAtBlendShapeApplyer>() != null)
+                {
+                    _lookAtBoneFlag = false;
+
+                    // Send information
+                    _informationUpdate.SetVRM(_vrmModel);
+                    _informationUpdate.SetLookAtType(_lookAtBoneFlag);
+                }
 
                 // Get all children in VRM model
                 SkinnedMeshRenderer[] allChildren = _vrmModel.GetComponentsInChildren<SkinnedMeshRenderer>();
