@@ -33,16 +33,28 @@ namespace VRMViewer
         [SerializeField]
         private GUICollapse _closeGameObject;
 
-        public void SetVRM(GameObject VRM, Transform leftEyeTransform, Transform rightEyeTransform)
+        public void SetVRM(GameObject VRM)
         {
-            _targetMover.VrmModel = VRM; _targetMover.LeftEye = leftEyeTransform; _targetMover.RightEye = rightEyeTransform;
-            _eyeControlCamera.VrmModel = VRM; _eyeControlCamera.LeftEye = leftEyeTransform; _eyeControlCamera.RightEye = rightEyeTransform;
+            _targetMover.VrmModel = VRM; 
+            _eyeControlCamera.VrmModel = VRM;
             _faceView.VrmModel = VRM;
             _facialExpressionPanel.VrmModel = VRM;
             _flyThroughCameraView.VrmModel = VRM;
             _multiLanguageSupport.VrmModel = VRM;
             _viewpointPanel.VrmModel = VRM;
             _closeGameObject.VrmModel = VRM;
+        }
+
+        public void SetBoneEyeTransform(Transform leftEyeTransform, Transform rightEyeTransform)
+        {
+            _targetMover.LeftEye = leftEyeTransform; _targetMover.RightEye = rightEyeTransform;
+            _eyeControlCamera.LeftEye = leftEyeTransform; _eyeControlCamera.RightEye = rightEyeTransform;
+        }
+
+        public void SetLookAtType(bool lookAtBone)
+        {
+            _targetMover.LookAtBone = lookAtBone;
+            _eyeControlCamera.LookAtBone = lookAtBone;
         }
 
         public void SetBVH(GameObject BVH)
