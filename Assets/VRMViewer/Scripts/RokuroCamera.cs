@@ -235,7 +235,8 @@ namespace VRMViewer
                     // Check if any slider is being used
                     if (_faceExpressionPanelGo.activeSelf == true)
                     {
-                        if (_predefinedExpression.activeSelf == true) {
+                        if (_predefinedExpression.activeSelf == true && _objs !=null)
+                        {
                             foreach (var objs in _objs)
                             {
                                 if (objs.GetComponent<UISlider>().IsBeingDragged() == true)
