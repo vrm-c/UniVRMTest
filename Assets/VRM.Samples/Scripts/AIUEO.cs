@@ -20,10 +20,10 @@ namespace VRM
 
         private void Awake()
         {
-            if (BlendShapes == null) BlendShapes = GetComponent<VRM.VRMBlendShapeProxy>();
-            if (BlendShapes == null) return;
-            if (BlendShapes.BlendShapeAvatar == null) return;
-            var avatar = BlendShapes.BlendShapeAvatar;
+            if (BlendShapes == null)
+            {
+                BlendShapes = GetComponent<VRM.VRMBlendShapeProxy>();
+            }
         }
 
         IEnumerator RoutineNest(BlendShapePreset preset, float velocity, float wait)

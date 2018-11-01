@@ -72,7 +72,7 @@ namespace VRMViewer
 
         private HumanPoseTransfer _bvhSource;
         private HumanPoseTransfer _loadedBvhSourceOnAvatar;
-        private ImporterContext _bvhMotion;
+        private BvhImporterContext _bvhMotion;
 
         // GLTFからモデルのオブジェクト
         private GameObject _vrmModel = null;
@@ -132,7 +132,7 @@ namespace VRMViewer
                 _bvhMotion = context;
                 UniHumanoid.BvhImporter.Import(context);
 
-                if(context.Avatar == null || context.Avatar.isValid == false)
+                if (context.Avatar == null || context.Avatar.isValid == false)
                 {
                     if (context.Root != null) { Destroy(context.Root); }
                     throw new Exception("BVH importer failed");
@@ -143,7 +143,7 @@ namespace VRMViewer
 
                 SetMotion(context.Root.GetComponent<HumanPoseTransfer>());
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 if (_bvhMotion.Root == true) { Destroy(_bvhMotion.Root); }
                 _errorMessagePanel.SetMessage(MultipleLanguageSupport.BvhLoadErrorMessage + "\nError message: " + e.Message);
@@ -171,7 +171,7 @@ namespace VRMViewer
                 Time.timeScale = _pause ? 0 : 1;
             }
             // Resume the normal activity
-            if (Input.GetKeyDown(KeyCode.R) && _errorMessagePanel.gameObject.activeSelf == true) 
+            if (Input.GetKeyDown(KeyCode.R) && _errorMessagePanel.gameObject.activeSelf == true)
             {
                 _errorMessagePanel.gameObject.SetActive(false);
                 LoadMotion(_bvhPathSaved);
@@ -246,7 +246,7 @@ namespace VRMViewer
                     _informationUpdate.SetBoneEyeTransform(_leftEyeSaved, _rightEyeSaved);
                     _informationUpdate.SetLookAtType(_lookAtBoneFlag);
                 }
-                else if(_vrmModel.GetComponent<VRMLookAtBlendShapeApplyer>() != null)
+                else if (_vrmModel.GetComponent<VRMLookAtBlendShapeApplyer>() != null)
                 {
                     _lookAtBoneFlag = false;
 
