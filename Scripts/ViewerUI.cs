@@ -218,11 +218,9 @@ namespace VRM
 
         private void LoadMotion(string path)
         {
-            var context = new UniHumanoid.ImporterContext
-            {
-                Path = path
-            };
-            UniHumanoid.BvhImporter.Import(context);
+            var context = new UniHumanoid.BvhImporterContext();
+            context.Parse(path);
+            context.Load();
             SetMotion(context.Root.GetComponent<HumanPoseTransfer>());
         }
 
@@ -298,29 +296,27 @@ namespace VRM
                 case ".vrm":
                     {
                         var context = new VRMImporterContext();
-
                         var file = File.ReadAllBytes(path);
                         context.ParseGlb(file);
-
                         m_texts.UpdateMeta(context);
-                        //UniJSON.JsonParser.Parse(context.Json);
-
-                        VRMImporter.LoadVrmAsync(context, SetModel);
-
+                        context.Load();
+                        context.ShowMeshes();
+                        context.EnableUpdateWhenOffscreen();
+                        context.ShowMeshes();
+                        SetModel(context.Root);
                         break;
                     }
 
                 case ".glb":
                     {
                         var context = new UniGLTF.ImporterContext();
-
                         var file = File.ReadAllBytes(path);
-                        context. ParseGlb(file);
-
-                        UniGLTF.gltfImporter.Load(context);
+                        context.ParseGlb(file);
+                        context.Load();
+                        context.ShowMeshes();
+                        context.EnableUpdateWhenOffscreen();
                         context.ShowMeshes();
                         SetModel(context.Root);
-
                         break;
                     }
 
@@ -359,7 +355,7 @@ namespace VRM
                 }
 
                 var animation = go.GetComponent<Animation>();
-                if (animation && animation.clip!=null)
+                if (animation && animation.clip != null)
                 {
                     animation.Play(animation.clip.name);
                 }
