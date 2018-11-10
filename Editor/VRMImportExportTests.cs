@@ -14,7 +14,9 @@ namespace VRM
             var path = UniGLTF.UnityPath.FromUnityPath("Models/Alicia_vrm-0.40/AliciaSolid_vrm-0.40.vrm");
             var context = new VRMImporterContext();
             context.ParseGlb(File.ReadAllBytes(path.FullPath));
-            VRMImporter.LoadFromBytes(context);
+            context.Load();
+            context.ShowMeshes();
+            context.EnableUpdateWhenOffscreen();
 
             using (new ActionDisposer(() => { GameObject.DestroyImmediate(context.Root); }))
             {
@@ -77,7 +79,9 @@ namespace VRM
             var path = UniGLTF.UnityPath.FromUnityPath("Models/Alicia_vrm-0.40/AliciaSolid_vrm-0.40.vrm");
             var context = new VRMImporterContext();
             context.ParseGlb(File.ReadAllBytes(path.FullPath));
-            VRMImporter.LoadFromBytes(context);
+            context.Load();
+            context.ShowMeshes();
+            context.EnableUpdateWhenOffscreen();
 
             foreach (var mesh in context.Meshes)
             {
