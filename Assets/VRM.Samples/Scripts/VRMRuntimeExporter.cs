@@ -53,36 +53,28 @@ public class VRMRuntimeExporter : MonoBehaviour
         Debug.LogFormat("meta: title:{0}", meta.Title);
 
         // ParseしたJSONをシーンオブジェクトに変換していく
-        LoadAsync(context);
+        context.LoadAsync(_ => OnLoaded(context));
     }
 
-    void LoadAsync(VRMImporterContext context)
-    {
-        var now = Time.time;
-        VRMImporter.LoadVrmAsync(context, go =>
-        {
-            var delta = Time.time - now;
-            Debug.LogFormat("LoadVrmAsync {0:0.0} seconds", delta);
-            OnLoaded(go);
-        });
-    }
-
-    void OnLoaded(GameObject root)
+    void OnLoaded(VRMImporterContext context)
     {
         if (m_model != null)
         {
             GameObject.Destroy(m_model.gameObject);
         }
-        m_model = root;
 
-        root.transform.rotation = Quaternion.Euler(0, 180, 0);
+        m_model = context.Root;
+        m_model.transform.rotation = Quaternion.Euler(0, 180, 0);
+
+        context.ShowMeshes();
+        context.EnableUpdateWhenOffscreen();
     }
     #endregion
 
     #region Export
     void OnExportClicked()
     {
-//#if UNITY_STANDALONE_WIN
+        //#if UNITY_STANDALONE_WIN
 #if false
         var path = FileDialogForWindows.SaveDialog("save VRM", Application.dataPath + "/export.vrm");
 #else
