@@ -125,13 +125,10 @@ namespace VRMViewer
                 var previous_motion = _bvhMotion;
                 if (previous_motion != null) { Destroy(previous_motion.Root); }
 
-                var context = new UniHumanoid.ImporterContext
-                {
-                    Path = path
-                };
+                var context = new UniHumanoid.BvhImporterContext();
                 _bvhMotion = context;
-                UniHumanoid.BvhImporter.Import(context);
-
+                context.Parse(path);
+                context.Load();
                 if (context.Avatar == null || context.Avatar.isValid == false)
                 {
                     if (context.Root != null) { Destroy(context.Root); }
@@ -221,7 +218,7 @@ namespace VRMViewer
                 // GLTFからモデルを生成します
                 try
                 {
-                    VRMImporter.LoadFromBytes(context);
+                    context.Load();
                     _vrmModel = context.Root;
                     Debug.LogFormat("loaded {0}", _vrmModel.name);
                 }

@@ -66,7 +66,7 @@ namespace VRMViewer
                         {
                             // Operate expression
                             _barValue = _objs[i].GetComponent<Slider>().value;
-                            proxy.SetValue(_expName[i], _barValue);
+                            proxy.ImmediatelySetValue(_expName[i], _barValue);
                         }
                     }
                 }
