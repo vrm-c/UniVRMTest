@@ -30,17 +30,17 @@ namespace VRM
         {
             for (var value = 0.0f; value <= 1.0f; value += velocity)
             {
-                BlendShapes.SetValue(preset, value);
+                BlendShapes.ImmediatelySetValue(preset, value);
                 yield return null;
             }
-            BlendShapes.SetValue(preset, 1.0f);
+            BlendShapes.ImmediatelySetValue(preset, 1.0f);
             yield return new WaitForSeconds(wait);
             for (var value = 1.0f; value >= 0; value -= velocity)
             {
-                BlendShapes.SetValue(preset, value);
+                BlendShapes.ImmediatelySetValue(preset, value);
                 yield return null;
             }
-            BlendShapes.SetValue(preset, 0);
+            BlendShapes.ImmediatelySetValue(preset, 0);
             yield return new WaitForSeconds(wait * 2);
         }
 
