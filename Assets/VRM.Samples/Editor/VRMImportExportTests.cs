@@ -6,6 +6,18 @@ using UnityEngine;
 
 namespace VRM
 {
+    public static class JsonExtensions
+    {
+        public static void SetValue<T>(this ListTreeNode<JsonValue> node, string key, T value)
+        {
+            var f = new JsonFormatter();
+            f.Serialize(value);
+            var p = Utf8String.From(key);
+            var bytes = f.GetStoreBytes();
+            node.SetValue(p, bytes);
+        }
+    }
+    
     public class VRMImportExportTests
     {
         [Test]
@@ -28,7 +40,7 @@ namespace VRM
                 //importJson.SetValue("/materials/*/pbrMetallicRoughness/roughnessFactor", 0);
                 //importJson.SetValue("/materials/*/pbrMetallicRoughness/baseColorFactor", new float[] { 1, 1, 1, 1 });
                 importJson.SetValue("/accessors/*/normalized", false);
-                importJson.RemoveValue("/nodes/*/extras");
+                importJson.RemoveValue(Utf8String.From("/nodes/*/extras"));
                 /*
                 importJson.SetValue("/bufferViews/12/byteStride", 4);
                 importJson.SetValue("/bufferViews/13/byteStride", 4);
@@ -57,7 +69,7 @@ namespace VRM
                 importJson.SetValue("/bufferViews/252/byteStride", 64);
                 importJson.SetValue("/bufferViews/253/byteStride", 64);
                 */
-                importJson.RemoveValue("/bufferViews/*/byteStride");
+                importJson.RemoveValue(Utf8String.From("/bufferViews/*/byteStride"));
 
                 var vrm = VRMExporter.Export(context.Root);
                 var exportJson = JsonParser.Parse(vrm.ToJson());
