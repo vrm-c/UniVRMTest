@@ -219,6 +219,9 @@ namespace VRMViewer
                 try
                 {
                     context.Load();
+                    context.ShowMeshes();
+                    context.EnableUpdateWhenOffscreen();
+                    context.ShowMeshes();
                     _vrmModel = context.Root;
                     Debug.LogFormat("loaded {0}", _vrmModel.name);
                 }
@@ -251,11 +254,6 @@ namespace VRMViewer
                     _informationUpdate.SetVRM(_vrmModel);
                     _informationUpdate.SetLookAtType(_lookAtBoneFlag);
                 }
-
-                // Get all children in VRM model
-                SkinnedMeshRenderer[] allChildren = _vrmModel.GetComponentsInChildren<SkinnedMeshRenderer>();
-                foreach (SkinnedMeshRenderer child in allChildren)
-                { child.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true; }
 
                 // VRMFirstPerson initialization
                 var m_firstPerson = _vrmModel.GetComponent<VRMFirstPerson>();
