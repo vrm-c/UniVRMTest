@@ -11,7 +11,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Virtual Cast Co., Ltd.
-  productName: VRM Viewer 1.02
+  productName: VRM Viewer 1.03
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21176471, a: 1}
@@ -594,8 +594,8 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.1
   apiCompatibilityLevel: 2
-  cloudProjectId: cfadc425-8dc6-4a5b-8fb7-4a71b32dbda0
-  projectName: UniVRMTest
-  organizationId: tetsuro-shindo
+  cloudProjectId: 59268dbd-c1ae-4f91-8ed8-97b6fbb744eb
+  projectName: VRM Viewer 1.03
+  organizationId: p-su
   cloudEnabled: 0
   enableNewInputSystem: 0
