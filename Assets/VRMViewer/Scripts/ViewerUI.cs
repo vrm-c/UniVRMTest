@@ -4,6 +4,8 @@ using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
 using VRM;
+using SimpleFileBrowser;
+using System.Collections;
 
 namespace VRMViewer
 {
@@ -89,9 +91,14 @@ namespace VRMViewer
         // VRMLookAtBone flag
         private bool _lookAtBoneFlag = false;
         #endregion
+        
+        public string vrmpath = null;
+        private string bvhpath = null;
 
         private void Start()
         {
+            //FileBrowser.SetFilters( true, new FileBrowser.Filter( "VRM", ".vrm"), new FileBrowser.Filter( "BVH", ".bvh" ) );
+
             _version.text = string.Format("UniVRM - {0}.{1}", VRMVersion.MAJOR, VRMVersion.MINOR);
 
             _pause = false;
@@ -177,20 +184,50 @@ namespace VRMViewer
 
         private void OnOpenClickedVRM()
         {
-            var path = FileDialogForWindows.FileDialog("open vrm", "vrm");
-
-            if (string.IsNullOrEmpty(path)) { return; }
+            FileBrowser.SetFilters( true, new FileBrowser.Filter( "VRM", ".vrm", ".VRM") );
+            FileBrowser.SetDefaultFilter( ".vrm");
+            StartCoroutine( ShowLoadDialogModel() );
+            //if (string.IsNullOrEmpty(vrmpath)) { return; }
             _errorMessagePanel.gameObject.SetActive(false);
-            LoadModel(path);
+            
         }
+
+        IEnumerator ShowLoadDialogModel()
+	    {
+		    yield return FileBrowser.WaitForLoadDialog( false, null, "Load File", "Load" );
+
+
+		    Debug.Log( FileBrowser.Success + " " + FileBrowser.Result );
+            if (FileBrowser.Success)
+            {
+                vrmpath=FileBrowser.Result;
+                LoadModel(vrmpath);
+            }
+            
+	    }
 
         private void OnOpenClickedBVH()
         {
-            var path = FileDialogForWindows.FileDialog("open BVH", "bvh");
 
-            if (string.IsNullOrEmpty(path)) { return; }
+            FileBrowser.SetFilters( true, new FileBrowser.Filter( "BVH", ".bvh", ".BVH") );
+            FileBrowser.SetDefaultFilter( ".bvh");
+            StartCoroutine( ShowLoadDialogMotion() );
+
+            //if (string.IsNullOrEmpty(path)) { return; }
             _errorMessagePanel.gameObject.SetActive(false);
-            LoadMotion(path);
+            //LoadMotion(path);
+        }
+
+        IEnumerator ShowLoadDialogMotion()
+	    {
+		    yield return FileBrowser.WaitForLoadDialog( false, null, "Load File", "Load" );
+
+		    Debug.Log( FileBrowser.Success + " " + FileBrowser.Result );
+            if (FileBrowser.Success)
+            {
+                bvhpath=FileBrowser.Result;
+                LoadMotion(bvhpath);
+            }
         }
 
         private void LoadModel(string path)

@@ -26,6 +26,9 @@ namespace VRMViewer
         [SerializeField]
         private Button _chineseButton;
 
+        [SerializeField]
+        private Button _koreanButton;
+
         private GameObject _vrmModel = null;
 
         public GameObject VrmModel { set { _vrmModel = value; } }
@@ -50,6 +53,7 @@ namespace VRMViewer
             _japaneseButton.onClick.AddListener(Show_Japnaese_Text);
             _englishButton.onClick.AddListener(Show_English_Text);
             _chineseButton.onClick.AddListener(Show_Chinese_Text);
+            _koreanButton.onClick.AddListener(Show_Korean_Text);
         }
 
         private void Show_Japnaese_Text()
@@ -386,6 +390,118 @@ namespace VRMViewer
 
             // Pause Message
             _pauseMessage.GetComponent<Text>().text = "程式暫停中";
+        }
+
+        private void Show_Korean_Text()
+        {
+#if true
+            if (_vrmModel == null)
+            {
+                foreach (var t in Traverse(_canvasRoot.transform))
+                {
+                    var localization = t.GetComponent<Localization>();
+                    if (localization != null) { localization.SetLanguage(LANGUAGES.Korean); }
+
+                    var initialLocalization = t.GetComponent<InitialLocalization>();
+                    if (initialLocalization != null) { initialLocalization.SetLanguage(LANGUAGES.Korean); }
+                }
+            }
+            else
+            {
+                foreach (var t in Traverse(_canvasRoot.transform))
+                {
+                    var localization = t.GetComponent<Localization>();
+                    if (localization != null) { localization.SetLanguage(LANGUAGES.Korean); }
+                }
+            }
+#else
+            // 1. Main Panel
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MainPanelTitle").GetComponent<Text>().text = "메인메뉴";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OpenVRMText").GetComponent<Text>().text = "VRM 모델";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OpenBVHText").GetComponent<Text>().text = "BVH 모션데이터";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MotionControlText").GetComponent<Text>().text = "모션";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FacialExpressionText").GetComponent<Text>().text = "표정";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "CameraViewText").GetComponent<Text>().text = "시점";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseInformationText").GetComponent<Text>().text = "모델정보";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LanguageTitle").GetComponent<Text>().text = "언어";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "PanelDisaplyText").GetComponent<Text>().text.Replace("\\n", "\n");
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "PanelDisaplyText").GetComponent<Text>().text = "Tab키를 눌러서 \n패널을 숨기거나 보이게 할 수 있습니다";
+
+            // 2. Motion control 
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MotionControlTitle").GetComponent<Text>().text = "모션";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "BodyPoseText").GetComponent<Text>().text = "몸 포즈";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "BVHText").GetComponent<Text>().text = "BVH 모션";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "TPoseText").GetComponent<Text>().text = "T-포즈";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "EyeControlText").GetComponent<Text>().text = "눈 움직임";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LookStraightAheadText").GetComponent<Text>().text = "정면 쳐다보기";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LookAtCameraText").GetComponent<Text>().text = "카메라 쳐다보기";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LookAtSphereText").GetComponent<Text>().text = "떠다니는 구슬 쳐다보기";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "HideSphereText").GetComponent<Text>().text = "구슬 숨기기";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OrbitalText").GetComponent<Text>().text = "궤도 반경";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "VerticalPositionText").GetComponent<Text>().text = "세로 위치";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "BlendShapeText").GetComponent<Text>().text = "BlendShape" 테스트";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "EnableAutoBlinkText").GetComponent<Text>().text = "자동 눈 깜빡이기";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "EnableLipSyncText").GetComponent<Text>().text = "입모양: 아이우에오";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MotionControlBackButtonText").GetComponent<Text>().text = "뒤로";
+
+            // 3. Expression panel
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FacialExpressionTitle").GetComponent<Text>().text = "표정";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FacialExpressionBackButtonText").GetComponent<Text>().text = "뒤로";
+
+            // 4. Viewpoint panel
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "ViewpointTitle").GetComponent<Text>().text = "카메라 시점";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FreeViewpointText").GetComponent<Text>().text = "자유시점";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FirstPersonModeText").GetComponent<Text>().text = "1인칭으로 모델 렌더링";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MouseOperationText").GetComponent<Text>().text.Replace("\\n", "\n");
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MouseOperationText").GetComponent<Text>().text = "마우스:\n왼쪽 / 오른쪽버튼: 회전\n휠버튼: 직선이동";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "KeyboardOperationText").GetComponent<Text>().text.Replace("\\n", "\n");
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "KeyboardOperationText").GetComponent<Text>().text = "키보드:\nW: 앞으로\nS: 뒤로\nA: 왼쪽\nD: 오른쪽\nP: 일시정지\nO: 원 위치\nTab: 패널 숨기기";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "AutoChangedViewpointText").GetComponent<Text>().text = "카메라 시점 자동 전환";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FaceCameraText").GetComponent<Text>().text = "얼굴 클로즈업";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "DistanceFromFace").GetComponent<Text>().text = "얼굴과의 거리";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "ViewpointBackButtonText").GetComponent<Text>().text = "뒤로";
+
+            // 5. License panel
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseTitle").GetComponent<Text>().text = "모델정보";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Title").GetComponent<Text>().text = "이름";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Version").GetComponent<Text>().text = "버전";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Author").GetComponent<Text>().text = "제작자";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Contact").GetComponent<Text>().text = "연락처";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Reference").GetComponent<Text>().text = "참조";
+
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "AvatarPermission").GetComponent<Text>().text = "표현에 대한 허가";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "AllowedUser").GetComponent<Text>().text = "사용허가된 자";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Violent").GetComponent<Text>().text = "폭력묘사";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Sexual").GetComponent<Text>().text = "성적묘사";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Commercial").GetComponent<Text>().text = "상업적이용";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Other").GetComponent<Text>().text = "기타";
+
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseRules").GetComponent<Text>().text = "재배포 · 변경에 관한 허가";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseType").GetComponent<Text>().text = "라이센스";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OtherLicense").GetComponent<Text>().text = "기타 라이센스";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseBackButtonText").GetComponent<Text>().text = "뒤로";
+
+            if(_vrmModel == null)
+            {
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "TitleDynamicText").GetComponent<Text>().text = "이름";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "VersionDynamicText").GetComponent<Text>().text = "버전";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "AuthorDynamicText").GetComponent<Text>().text = "제작자";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "ContactDynamicText").GetComponent<Text>().text = "연락처";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "ReferenceDynamicText").GetComponent<Text>().text = "참조";
+
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "AllowedUserDynamicText").GetComponent<Text>().text = "사용허가된 자";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "ViolentDynamicText").GetComponent<Text>().text = "폭력묘사";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "SexualDynamicText").GetComponent<Text>().text = "성적묘사";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "CommercialDynamicText").GetComponent<Text>().text = "상업적이용";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OtherDynamicText").GetComponent<Text>().text = "기타";
+
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseTypeDynamicText").GetComponent<Text>().text = "라이센스";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OtherLicenseDynamicText").GetComponent<Text>().text = "기타 라이센스 URL";
+            }
+#endif
+
+            // Pause Message
+            _pauseMessage.GetComponent<Text>().text = "일시정지 중입니다";
         }
 
     }

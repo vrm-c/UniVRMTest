@@ -19,6 +19,10 @@ namespace VRMViewer
         public string Chinese = "中文";
 
         [SerializeField]
+        [TextArea]
+        public string Korean = "한국어";
+
+        [SerializeField]
         private Text _text;
 
         private void Reset()
@@ -38,6 +42,9 @@ namespace VRMViewer
                     break;
                 case LANGUAGES.Chinese:
                     _text.text = Chinese;
+                    break;
+                case LANGUAGES.Korean:
+                    _text.text = Korean;
                     break;
             }
         }
