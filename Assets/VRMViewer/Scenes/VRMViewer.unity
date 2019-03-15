@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641258, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.1802833, g: 0.22571321, b: 0.30692175, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -348,7 +348,7 @@ RectTransform:
   m_GameObject: {fileID: 33874312}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000098, y: 1.0000098, z: 1.0000098}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1280236311}
   m_Father: {fileID: 134589947}
@@ -758,6 +758,7 @@ MonoBehaviour:
   Japnaese: "\u30BF\u30A4\u30C8\u30EB"
   English: Title
   Chinese: "\u6A19\u984C"
+  Korean: "\uC774\uB984"
   _text: {fileID: 104351175}
 --- !u!1 &108849067
 GameObject:
@@ -849,6 +850,7 @@ MonoBehaviour:
   Japnaese: "\u9023\u7D61\u5148"
   English: Contact
   Chinese: "\u806F\u7D61\u8CC7\u8A0A"
+  Korean: "\uC5F0\uB77D\uCC98"
   _text: {fileID: 108849069}
 --- !u!1 &134589946
 GameObject:
@@ -889,6 +891,7 @@ RectTransform:
   - {fileID: 1400214935}
   - {fileID: 33874313}
   - {fileID: 1915318702}
+  - {fileID: 1053679722}
   - {fileID: 646332987}
   m_Father: {fileID: 418125391}
   m_RootOrder: 0
@@ -1412,6 +1415,7 @@ MonoBehaviour:
   Japnaese: "\u30E1\u30A4\u30F3\u30E1\u30CB\u30E5\u30FC"
   English: Main Menu
   Chinese: "\u4E3B\u9078\u55AE"
+  Korean: "\uBA54\uC778\uBA54\uB274"
   _text: {fileID: 179479867}
 --- !u!1 &187395902
 GameObject:
@@ -1502,6 +1506,7 @@ MonoBehaviour:
   Japnaese: "\u66B4\u529B\u8868\u73FE"
   English: Violent acts
   Chinese: "\u66B4\u529B\u8868\u73FE"
+  Korean: "\uD3ED\uB825\uBB18\uC0AC"
   _text: {fileID: 187395904}
 --- !u!1 &212885479
 GameObject:
@@ -1715,6 +1720,7 @@ MonoBehaviour:
   Japnaese: "\u4E00\u4EBA\u79F0\u63CF\u753B"
   English: Render model in first-person
   Chinese: "\u4EE5\u7B2C\u4E00\u4EBA\u7A31\u6E32\u67D3\u6A21\u578B"
+  Korean: "1\uC778\uCE6D\uC73C\uB85C \uBAA8\uB378 \uB80C\uB354\uB9C1"
   _text: {fileID: 226447374}
 --- !u!1 &241398688
 GameObject:
@@ -2078,6 +2084,7 @@ MonoBehaviour:
   _japaneseButton: {fileID: 1400214936}
   _englishButton: {fileID: 33874314}
   _chineseButton: {fileID: 1915318703}
+  _koreanButton: {fileID: 1053679723}
 --- !u!114 &328781445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4021,6 +4028,7 @@ MonoBehaviour:
   Japnaese: "\u8868\u60C5"
   English: Facial Expression
   Chinese: "\u8868\u60C5"
+  Korean: "\uD45C\uC815"
   _text: {fileID: 585969368}
 --- !u!1 &607400243
 GameObject:
@@ -4267,7 +4275,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 134589947}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4331,6 +4339,8 @@ MonoBehaviour:
 
     undisplay / display panel'
   Chinese: "\u6309Tab\u9375\n\u96B1\u85CF\u6216\u986F\u793A\u4ECB\u9762"
+  Korean: "Tab\uD0A4\uB97C \uB20C\uB7EC\uC11C \n\uD328\uB110\uC744 \uC228\uAE30\uAC70\uB098
+    \uBCF4\uC774\uAC8C \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
   _text: {fileID: 646332988}
 --- !u!1 &657947711
 GameObject:
@@ -4591,6 +4601,7 @@ MonoBehaviour:
   Japnaese: "\u623B\u308B"
   English: Back
   Chinese: "\u8FD4\u56DE"
+  Korean: "\uB4A4\uB85C"
   _text: {fileID: 673239635}
 --- !u!1 &675399553
 GameObject:
@@ -4750,6 +4761,7 @@ MonoBehaviour:
   Japnaese: "\u305D\u306E\u4ED6\u306E\u6761\u4EF6"
   English: Other
   Chinese: "\u5176\u4ED6\u689D\u4EF6"
+  Korean: "\uAE30\uD0C0"
   _text: {fileID: 676427294}
 --- !u!1 &678663098
 GameObject:
@@ -4916,6 +4928,7 @@ MonoBehaviour:
   Japnaese: "\u30A2\u30D0\u30BF\u30FC\u306E\u4EBA\u683C\u306B\u95A2\u3059\u308B\u8A31\u8AFE\u7BC4\u56F2"
   English: Personation / Characterization Permission
   Chinese: "\u963F\u51E1\u9054\u7684\u4EBA\u683C\u8A31\u53EF\u7BC4\u570D"
+  Korean: "\uD45C\uD604\uC5D0 \uB300\uD55C \uD5C8\uAC00"
   _text: {fileID: 686800711}
 --- !u!1 &718280688
 GameObject:
@@ -5161,6 +5174,7 @@ MonoBehaviour:
   Japnaese: "\u5546\u7528\u5229\u7528"
   English: Commercial use
   Chinese: "\u5546\u696D\u5229\u7528"
+  Korean: "\uC0C1\uC5C5\uC801\uC774\uC6A9"
   _text: {fileID: 741482844}
 --- !u!1 &755159641
 GameObject:
@@ -5251,6 +5265,7 @@ MonoBehaviour:
   Japnaese: "\u4F5C\u8005"
   English: Author
   Chinese: "\u4F5C\u8005"
+  Korean: "\uC81C\uC791\uC790"
   _text: {fileID: 755159643}
 --- !u!1 &791605600
 GameObject:
@@ -5445,6 +5460,7 @@ MonoBehaviour:
   Japnaese: "\u305D\u306E\u4ED6\u306E\u6761\u4EF6"
   English: Other license
   Chinese: "\u5176\u4ED6\u8A31\u53EF"
+  Korean: "\uAE30\uD0C0 \uB77C\uC774\uC13C\uC2A4"
   _text: {fileID: 795296793}
 --- !u!1 &807599188
 GameObject:
@@ -5801,6 +5817,7 @@ MonoBehaviour:
   Japnaese: "\u30BF\u30A4\u30C8\u30EB"
   English: Title
   Chinese: "\u6A19\u984C"
+  Korean: "\uC774\uB984"
   _text: {fileID: 838607207}
 --- !u!1 &850169934
 GameObject:
@@ -5960,6 +5977,7 @@ MonoBehaviour:
   Japnaese: "\u9023\u7D61\u5148"
   English: Contact information
   Chinese: "\u806F\u7D61\u8CC7\u8A0A"
+  Korean: "\uC5F0\uB77D\uCC98"
   _text: {fileID: 865537149}
 --- !u!1 &879463751
 GameObject:
@@ -6119,6 +6137,7 @@ MonoBehaviour:
   Japnaese: "\u30E2\u30C7\u30EB\u60C5\u5831"
   English: Model Information
   Chinese: "\u6A21\u578B\u8CC7\u8A0A"
+  Korean: "\uBAA8\uB378\uC815\uBCF4"
   _text: {fileID: 886612437}
 --- !u!1 &889924544
 GameObject:
@@ -6343,6 +6362,7 @@ MonoBehaviour:
   Japnaese: "\u6027\u7684\u8868\u73FE"
   English: Sexual acts
   Chinese: "\u6027\u7684\u8868\u73FE"
+  Korean: "\uC131\uC801\uBB18\uC0AC"
   _text: {fileID: 909029458}
 --- !u!1 &915351655
 GameObject:
@@ -6434,6 +6454,7 @@ MonoBehaviour:
   Japnaese: "\u8A31\u53EF"
   English: License
   Chinese: "\u8A31\u53EF"
+  Korean: "\uB77C\uC774\uC13C\uC2A4"
   _text: {fileID: 915351657}
 --- !u!1 &917798285
 GameObject:
@@ -6661,6 +6682,7 @@ MonoBehaviour:
   Japnaese: "\u53C2\u7167"
   English: Reference
   Chinese: "\u53C2\u8003"
+  Korean: "\uCC38\uC870"
   _text: {fileID: 924031183}
 --- !u!1 &924491470
 GameObject:
@@ -6969,6 +6991,7 @@ MonoBehaviour:
   Japnaese: "\u7403\u4F53\u3092\u898B\u308B"
   English: Look at sphere
   Chinese: "\u770B\u7403\u9AD4"
+  Korean: "\uB5A0\uB2E4\uB2C8\uB294 \uAD6C\uC2AC \uCCD0\uB2E4\uBCF4\uAE30"
   _text: {fileID: 964480119}
 --- !u!1 &970938626
 GameObject:
@@ -7059,6 +7082,7 @@ MonoBehaviour:
   Japnaese: "VRM\u30E2\u30C7\u30EB"
   English: VRM Model
   Chinese: "VRM\u6A21\u578B"
+  Korean: "VRM \uBAA8\uB378"
   _text: {fileID: 970938628}
 --- !u!1 &980354583
 GameObject:
@@ -7217,6 +7241,7 @@ MonoBehaviour:
   Japnaese: "\u8A31\u8AFE\u7BC4\u56F2"
   English: Allowed user
   Chinese: "\u5141\u8A31\u7684\u4F7F\u7528\u8005"
+  Korean: "\uC0AC\uC6A9\uD5C8\uAC00\uB41C \uC790"
   _text: {fileID: 990050027}
 --- !u!1 &1024428756
 GameObject:
@@ -7307,6 +7332,7 @@ MonoBehaviour:
   Japnaese: "\u8DDD\u96E2"
   English: Distance
   Chinese: "\u8DDD\u96E2"
+  Korean: "\uC5BC\uAD74\uACFC\uC758 \uAC70\uB9AC"
   _text: {fileID: 1024428758}
 --- !u!1 &1030028353
 GameObject:
@@ -7460,6 +7486,7 @@ MonoBehaviour:
   Japnaese: "\u30D0\u30FC\u30B8\u30E7\u30F3"
   English: Version
   Chinese: "\u7248\u672C"
+  Korean: "\uBC84\uC804"
   _text: {fileID: 1033095222}
 --- !u!1 &1039658229
 GameObject:
@@ -7550,7 +7577,119 @@ MonoBehaviour:
   Japnaese: "\u81EA\u52D5\u307E\u3070\u305F\u304D"
   English: Auto-blink
   Chinese: "\u81EA\u52D5\u7728\u773C"
+  Korean: "\uC790\uB3D9 \uB208 \uAE5C\uBE61\uC774\uAE30"
   _text: {fileID: 1039658231}
+--- !u!1 &1053679721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1053679722}
+  - component: {fileID: 1053679725}
+  - component: {fileID: 1053679724}
+  - component: {fileID: 1053679723}
+  m_Layer: 5
+  m_Name: KoreanVersion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1053679722
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1053679721}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1469091815}
+  m_Father: {fileID: 134589947}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 180, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1053679723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1053679721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1053679724}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1053679724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1053679721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1053679725
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1053679721}
 --- !u!1 &1057248691
 GameObject:
   m_ObjectHideFlags: 0
@@ -7650,6 +7789,8 @@ MonoBehaviour:
     Wheel: translation'
   Chinese: "\u6ED1\u9F20:\n\u5DE6\u9375\u6216\u53F3\u9375: \u65CB\u8F49\n\u6EFE\u8F2A:
     \u5E73\u79FB"
+  Korean: "\uB9C8\uC6B0\uC2A4:\n\uC67C\uCABD / \uC624\uB978\uCABD\uBC84\uD2BC: \uD68C\uC804\n\uD720\uBC84\uD2BC:
+    \uC9C1\uC120\uC774\uB3D9"
   _text: {fileID: 1057248693}
 --- !u!1 &1064337404
 GameObject:
@@ -7740,6 +7881,7 @@ MonoBehaviour:
   Japnaese: "BVH\u30C7\u30FC\u30BF"
   English: BVH Data
   Chinese: "BVH\u6578\u64DA"
+  Korean: "BVH \uBAA8\uC158\uB370\uC774\uD130"
   _text: {fileID: 1064337406}
 --- !u!1 &1077101468
 GameObject:
@@ -7830,6 +7972,7 @@ MonoBehaviour:
   Japnaese: "\u30AB\u30E1\u30E9\u76EE\u7DDA"
   English: Look at camera
   Chinese: "\u770B\u76F8\u6A5F"
+  Korean: "\uCE74\uBA54\uB77C \uCCD0\uB2E4\uBCF4\uAE30"
   _text: {fileID: 1077101470}
 --- !u!1 &1077834103
 GameObject:
@@ -7988,6 +8131,7 @@ MonoBehaviour:
   Japnaese: "\u5782\u76F4\u4F4D\u7F6E"
   English: Vertical position
   Chinese: "\u5782\u76F4\u9AD8\u5EA6"
+  Korean: "\uC138\uB85C \uC704\uCE58"
   _text: {fileID: 1093119687}
 --- !u!1 &1116908792
 GameObject:
@@ -8312,6 +8456,7 @@ MonoBehaviour:
   Japnaese: "\u8996\u70B9"
   English: Viewpoint
   Chinese: "\u8996\u9EDE"
+  Korean: "\uCE74\uBA54\uB77C \uC2DC\uC810"
   _text: {fileID: 1138006137}
 --- !u!1 &1142261571
 GameObject:
@@ -8483,6 +8628,7 @@ MonoBehaviour:
   Japnaese: "T-\u30DD\u30FC\u30BA"
   English: T-Pose
   Chinese: "T-\u59FF\u52E2"
+  Korean: "T-\uD3EC\uC988"
   _text: {fileID: 1143014259}
 --- !u!1 &1148328601
 GameObject:
@@ -8573,6 +8719,7 @@ MonoBehaviour:
   Japnaese: "\u623B\u308B"
   English: Back
   Chinese: "\u8FD4\u56DE"
+  Korean: "\uB4A4\uB85C"
   _text: {fileID: 1148328603}
 --- !u!1 &1148560904
 GameObject:
@@ -8663,6 +8810,7 @@ MonoBehaviour:
   Japnaese: "\u6027\u7684\u8868\u73FE"
   English: Sexual acts
   Chinese: "\u6027\u7684\u8868\u73FE"
+  Korean: "\uC131\uC801\uBB18\uC0AC"
   _text: {fileID: 1148560906}
 --- !u!1 &1192935706
 GameObject:
@@ -8947,6 +9095,7 @@ MonoBehaviour:
   Japnaese: "\u30DC\u30C7\u30A3\u30DD\u30FC\u30BA"
   English: Body Pose
   Chinese: "\u8EAB\u9AD4\u59FF\u52E2"
+  Korean: "\uBAB8 \uD3EC\uC988"
   _text: {fileID: 1258772284}
 --- !u!1 &1262716615
 GameObject:
@@ -9195,6 +9344,7 @@ MonoBehaviour:
   Japnaese: "\u8A31\u53EF"
   English: License
   Chinese: "\u8A31\u53EF"
+  Korean: "\uB77C\uC774\uC13C\uC2A4"
   _text: {fileID: 1305680947}
 --- !u!1 &1318921374
 GameObject:
@@ -9359,6 +9509,7 @@ MonoBehaviour:
   Japnaese: "\u81EA\u7531\u8996\u70B9"
   English: Free viewpoint
   Chinese: "\u81EA\u7531\u8996\u9EDE"
+  Korean: "\uC790\uC720\uC2DC\uC810"
   _text: {fileID: 1322461024}
 --- !u!1 &1329679478
 GameObject:
@@ -9517,6 +9668,7 @@ MonoBehaviour:
   Japnaese: "\u8868\u60C5"
   English: Expression
   Chinese: "\u8868\u60C5"
+  Korean: "\uD45C\uC815"
   _text: {fileID: 1338134476}
 --- !u!1 &1381396293
 GameObject:
@@ -9682,6 +9834,7 @@ MonoBehaviour:
   Japnaese: "\u66B4\u529B\u8868\u73FE"
   English: Violent acts
   Chinese: "\u66B4\u529B\u8868\u73FE"
+  Korean: "\uD3ED\uB825\uBB18\uC0AC"
   _text: {fileID: 1387159380}
 --- !u!1 &1400214934
 GameObject:
@@ -9901,6 +10054,7 @@ MonoBehaviour:
   Japnaese: "\u30E2\u30FC\u30B7\u30E7\u30F3"
   English: Motion
   Chinese: "\u52D5\u4F5C"
+  Korean: "\uBAA8\uC158"
   _text: {fileID: 1410347694}
 --- !u!1 &1421168127
 GameObject:
@@ -9991,6 +10145,7 @@ MonoBehaviour:
   Japnaese: "\u8996\u7DDA\u5236\u5FA1"
   English: Eye Control
   Chinese: "\u8996\u7DDA\u63A7\u5236"
+  Korean: "\uB208 \uC6C0\uC9C1\uC784"
   _text: {fileID: 1421168129}
 --- !u!1 &1427348054
 GameObject:
@@ -10402,7 +10557,82 @@ MonoBehaviour:
   Japnaese: "\u4F5C\u8005"
   English: Author
   Chinese: "\u4F5C\u8005"
+  Korean: "\uC81C\uC791\uC790"
   _text: {fileID: 1464604658}
+--- !u!1 &1469091814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1469091815}
+  - component: {fileID: 1469091817}
+  - component: {fileID: 1469091816}
+  m_Layer: 5
+  m_Name: KoreanText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1469091815
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1469091814}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1053679722}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1469091816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1469091814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 22
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 1
+    m_MaxSize: 22
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "\uD55C\uAD6D\uC5B4"
+--- !u!222 &1469091817
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1469091814}
 --- !u!1 &1476362756
 GameObject:
   m_ObjectHideFlags: 0
@@ -10737,6 +10967,7 @@ MonoBehaviour:
   Japnaese: "\u30D5\u30A7\u30A4\u30B9\u30AF\u30ED\u30FC\u30BA\u30A2\u30C3\u30D7"
   English: Face close-up
   Chinese: "\u81C9\u90E8\u7279\u5BEB"
+  Korean: "\uC5BC\uAD74 \uD074\uB85C\uC988\uC5C5"
   _text: {fileID: 1496232982}
 --- !u!1 &1499023904
 GameObject:
@@ -10895,6 +11126,7 @@ MonoBehaviour:
   Japnaese: "\u305D\u306E\u4ED6\u306E\u6761\u4EF6"
   English: Other license url
   Chinese: "\u5176\u4ED6\u8A31\u53EF"
+  Korean: "\uAE30\uD0C0 \uB77C\uC774\uC13C\uC2A4 URL"
   _text: {fileID: 1512084142}
 --- !u!1 &1518469909
 GameObject:
@@ -11454,6 +11686,7 @@ MonoBehaviour:
   Japnaese: "\u30D0\u30FC\u30B8\u30E7\u30F3"
   English: Version
   Chinese: "\u7248\u672C"
+  Korean: "\uBC84\uC804"
   _text: {fileID: 1555250616}
 --- !u!1 &1558949344
 GameObject:
@@ -11544,6 +11777,7 @@ MonoBehaviour:
   Japnaese: "\u30E2\u30FC\u30B7\u30E7\u30F3"
   English: Motion
   Chinese: "\u52D5\u4F5C"
+  Korean: "\uBAA8\uC158"
   _text: {fileID: 1558949346}
 --- !u!1 &1576197773
 GameObject:
@@ -12191,6 +12425,7 @@ MonoBehaviour:
   Japnaese: "\u623B\u308B"
   English: Back
   Chinese: "\u8FD4\u56DE"
+  Korean: "\uB4A4\uB85C"
   _text: {fileID: 1620621039}
 --- !u!1 &1624875919
 GameObject:
@@ -12349,6 +12584,7 @@ MonoBehaviour:
   Japnaese: "BVH\u30E2\u30FC\u30B7\u30E7\u30F3"
   English: BVH motion
   Chinese: "BVH\u52D5\u4F5C"
+  Korean: "BVH \uBAA8\uC158"
   _text: {fileID: 1627840227}
 --- !u!1 &1629460656
 GameObject:
@@ -12691,6 +12927,7 @@ MonoBehaviour:
   Japnaese: "\u53C2\u7167"
   English: Reference
   Chinese: "\u53C2\u8003"
+  Korean: "\uCC38\uC870"
   _text: {fileID: 1658002687}
 --- !u!1 &1658088757
 GameObject:
@@ -12781,6 +13018,7 @@ MonoBehaviour:
   Japnaese: "\u53E3\u30D1\u30AF: \u3042\u3044\u3046\u3048\u304A"
   English: 'Lip-sync: aa-ih-ou-E-oh'
   Chinese: "\u5C0D\u5634: aa-ih-ou-E-oh"
+  Korean: "\uC785\uBAA8\uC591: \uC544\uC774\uC6B0\uC5D0\uC624"
   _text: {fileID: 1658088759}
 --- !u!1 &1661735558
 GameObject:
@@ -12871,6 +13109,7 @@ MonoBehaviour:
   Japnaese: "\u623B\u308B"
   English: Back
   Chinese: "\u8FD4\u56DE"
+  Korean: "\uB4A4\uB85C"
   _text: {fileID: 1661735560}
 --- !u!1 &1676065705
 GameObject:
@@ -13506,6 +13745,7 @@ MonoBehaviour:
   Japnaese: "\u305D\u306E\u4ED6\u306E\u6761\u4EF6"
   English: Other
   Chinese: "\u5176\u4ED6\u689D\u4EF6"
+  Korean: "\uAE30\uD0C0"
   _text: {fileID: 1733476195}
 --- !u!1 &1734353027
 GameObject:
@@ -13596,6 +13836,7 @@ MonoBehaviour:
   Japnaese: "\u8996\u70B9"
   English: Viewpoint
   Chinese: "\u8996\u9EDE"
+  Korean: "\uC2DC\uC810"
   _text: {fileID: 1734353029}
 --- !u!1 &1740103028
 GameObject:
@@ -13687,6 +13928,7 @@ MonoBehaviour:
   Japnaese: "\u5546\u7528\u5229\u7528"
   English: Commercial use
   Chinese: "\u5546\u696D\u5229\u7528"
+  Korean: "\uC0C1\uC5C5\uC801\uC774\uC6A9"
   _text: {fileID: 1740103030}
 --- !u!1 &1745355202
 GameObject:
@@ -13869,6 +14111,7 @@ MonoBehaviour:
   Japnaese: "\u518D\u914D\u5E03\u30FB\u6539\u5909\u306B\u95A2\u3059\u308B\u8A31\u8AFE\u7BC4\u56F2"
   English: Redistribution / Modifications License
   Chinese: "\u518D\u6563\u4F48 / \u4FEE\u6539\u8A31\u53EF"
+  Korean: "\uC7AC\uBC30\uD3EC \xB7 \uBCC0\uACBD\uC5D0 \uAD00\uD55C \uD5C8\uAC00"
   _text: {fileID: 1751415274}
 --- !u!1 &1761503774
 GameObject:
@@ -14063,6 +14306,9 @@ MonoBehaviour:
     Tab: undisplay / display panel'
   Chinese: "\u9375\u76E4:\nW: \u5F80\u524D\nS: \u5F80\u5F8C\nA: \u5F80\u5DE6\nD: \u5F80\u53F3\nP:
     \u66AB\u505C\nO: \u56DE\u5230\u539F\u9EDE\nTab: \u96B1\u85CF\u6216\u986F\u793A\u4ECB\u9762"
+  Korean: "\uD0A4\uBCF4\uB4DC:\nW: \uC55E\uC73C\uB85C\nS: \uB4A4\uB85C\nA: \uC67C\uCABD\nD:
+    \uC624\uB978\uCABD\nP: \uC77C\uC2DC\uC815\uC9C0\nO: \uC6D0 \uC704\uCE58\nTab:
+    \uD328\uB110 \uC228\uAE30\uAE30"
   _text: {fileID: 1762893623}
 --- !u!1 &1767465605
 GameObject:
@@ -14153,6 +14399,7 @@ MonoBehaviour:
   Japnaese: "\u8A00\u8A9E"
   English: Language
   Chinese: "\u8A9E\u8A00"
+  Korean: "\uC5B8\uC5B4"
   _text: {fileID: 1767465607}
 --- !u!1 &1782875776
 GameObject:
@@ -14346,6 +14593,7 @@ MonoBehaviour:
   Japnaese: "\u76EE\u7DDA\u64CD\u4F5C\u30AA\u30D5"
   English: Look straight ahead
   Chinese: "\u770B\u6B63\u524D\u65B9"
+  Korean: "\uC815\uBA74 \uCCD0\uB2E4\uBCF4\uAE30"
   _text: {fileID: 1789565225}
 --- !u!1 &1793598847
 GameObject:
@@ -14578,6 +14826,7 @@ MonoBehaviour:
   Japnaese: "\u65E5\u672C\u8A9E"
   English: English
   Chinese: "\u4E2D\u6587"
+  Korean: "\uD55C\uAD6D\uC5B4"
   _text: {fileID: 1794885048}
 --- !u!1 &1809481951
 GameObject:
@@ -15108,7 +15357,7 @@ RectTransform:
   m_GameObject: {fileID: 1915318701}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000098, y: 1.0000098, z: 1.0000098}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2000943352}
   m_Father: {fileID: 134589947}
@@ -15608,6 +15857,7 @@ MonoBehaviour:
   Japnaese: "\u81EA\u52D5\u8996\u70B9\u5909\u66F4"
   English: Auto-change viewpoint
   Chinese: "\u81EA\u52D5\u8B8A\u63DB\u8996\u9EDE"
+  Korean: "\uCE74\uBA54\uB77C \uC2DC\uC810 \uC790\uB3D9 \uC804\uD658"
   _text: {fileID: 1947448045}
 --- !u!1 &1952969825
 GameObject:
@@ -15698,6 +15948,7 @@ MonoBehaviour:
   Japnaese: "\u30E2\u30C7\u30EB\u60C5\u5831"
   English: Model Information
   Chinese: "\u6A21\u578B\u8CC7\u8A0A"
+  Korean: "\uBAA8\uB378\uC815\uBCF4"
   _text: {fileID: 1952969827}
 --- !u!1 &1992373917
 GameObject:
@@ -15788,6 +16039,7 @@ MonoBehaviour:
   Japnaese: "\u7403\u4F53\u3092\u96A0\u3059"
   English: Hide sphere
   Chinese: "\u96B1\u85CF\u7403\u9AD4"
+  Korean: "\uAD6C\uC2AC \uC228\uAE30\uAE30"
   _text: {fileID: 1992373919}
 --- !u!1 &1992891220
 GameObject:
@@ -16281,6 +16533,7 @@ MonoBehaviour:
   Japnaese: "\u8A31\u8AFE\u7BC4\u56F2"
   English: Allowed user
   Chinese: "\u5141\u8A31\u7684\u4F7F\u7528\u8005"
+  Korean: "\uC0AC\uC6A9\uD5C8\uAC00\uB41C \uC790"
   _text: {fileID: 2020441579}
 --- !u!1 &2038108731
 GameObject:
@@ -16371,6 +16624,7 @@ MonoBehaviour:
   Japnaese: "BlendShape\u30C6\u30B9\u30C8"
   English: BlendShape Test
   Chinese: "BlendShape\u6E2C\u8A66"
+  Korean: "BlendShape \uD14C\uC2A4\uD2B8"
   _text: {fileID: 2038108733}
 --- !u!1 &2042768798
 GameObject:
@@ -16783,4 +17037,5 @@ MonoBehaviour:
   Japnaese: "\u8ECC\u9053\u534A\u5F84"
   English: Orbital radius
   Chinese: "\u74B0\u7E5E\u534A\u5F91"
+  Korean: "\uADA4\uB3C4 \uBC18\uACBD"
   _text: {fileID: 2113742627}

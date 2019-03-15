@@ -7,5 +7,6 @@ namespace VRMViewer
         Japanese,
         English,
         Chinese,
+        Korean,
     }
 }
