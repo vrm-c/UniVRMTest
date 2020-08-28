@@ -73,6 +73,7 @@ namespace VRMViewer
         private HumanPoseTransfer _bvhSource;
         private HumanPoseTransfer _loadedBvhSourceOnAvatar;
         private BvhImporterContext _bvhMotion;
+        private VRMBlendShapeProxy _proxy;
 
         // GLTFからモデルのオブジェクト
         private GameObject _vrmModel = null;
@@ -152,6 +153,11 @@ namespace VRMViewer
         private void Update()
         {
             UIOperation();
+
+            if (_proxy != null)
+            {
+                _proxy.Apply();
+            }
         }
 
         private void UIOperation()
@@ -232,33 +238,6 @@ namespace VRMViewer
 
                 // Set up Model
                 SetModel(_vrmModel);
-                _facialExpressionPanel.CreateDynamicObject(_vrmModel);
-
-                // Check the model's LookAt type
-                if (_vrmModel.GetComponent<VRMLookAtBoneApplyer>() != null)
-                {
-                    _leftEyeSaved = _vrmModel.GetComponent<VRMLookAtBoneApplyer>().LeftEye.Transform;
-                    _rightEyeSaved = _vrmModel.GetComponent<VRMLookAtBoneApplyer>().RightEye.Transform;
-                    _lookAtBoneFlag = true;
-
-                    // Send information
-                    _informationUpdate.SetVRM(_vrmModel);
-                    _informationUpdate.SetBoneEyeTransform(_leftEyeSaved, _rightEyeSaved);
-                    _informationUpdate.SetLookAtType(_lookAtBoneFlag);
-                }
-                else if (_vrmModel.GetComponent<VRMLookAtBlendShapeApplyer>() != null)
-                {
-                    _lookAtBoneFlag = false;
-
-                    // Send information
-                    _informationUpdate.SetVRM(_vrmModel);
-                    _informationUpdate.SetLookAtType(_lookAtBoneFlag);
-                }
-
-                // VRMFirstPerson initialization
-                var m_firstPerson = _vrmModel.GetComponent<VRMFirstPerson>();
-                if (m_firstPerson != null) { m_firstPerson.Setup(); }
-                if (_freeViewpointToggle.isOn) { _closeGameObject.EnableFirstPersonModeOption(); }
             }
             catch (Exception e)
             {
@@ -282,24 +261,86 @@ namespace VRMViewer
 
             if (vrmModel != null)
             {
-                _loadedBvhSourceOnAvatar = vrmModel.AddComponent<HumanPoseTransfer>();
+                // Set up expressions
+                _facialExpressionPanel.CreateDynamicObject(_vrmModel);
+                _informationUpdate.SetVRM(vrmModel);
+                _proxy = vrmModel.GetComponent<VRMBlendShapeProxy>();
 
-                _loadedBvhSourceOnAvatar.Source = _bvhSource;
-                _motionControlPanel.LoadedBvhSourceOnAvatar = _loadedBvhSourceOnAvatar;
-
-                if (_toggleMotionBVH.isOn) { _loadedBvhSourceOnAvatar.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer; }
-                if (_toggleMotionTPose.isOn) { _loadedBvhSourceOnAvatar.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseClip; }
-
-                if (_faceViewToggle.isOn) { _closeGameObject.FaceCameraPropertyActivateVRM(); }
-
-                _motionControlPanel.AssignAutoPlay(vrmModel);
-
+                // Set up LookAt
                 var lookAt = vrmModel.GetComponent<VRMLookAtHead>();
-                if (_lookAtSphere.isOn) { lookAt.Target = _targetSphere.transform; }
-                else if (_lookAtCamera.isOn) { lookAt.Target = _targetCamera.transform; }
-                else { lookAt.Target = _targetSphere.transform; }
+                if (lookAt != null)
+                {
+                    _loadedBvhSourceOnAvatar = vrmModel.AddComponent<HumanPoseTransfer>();
 
-                lookAt.UpdateType = UpdateType.LateUpdate; // after HumanPoseTransfer's setPose
+                    _loadedBvhSourceOnAvatar.Source = _bvhSource;
+                    _motionControlPanel.LoadedBvhSourceOnAvatar = _loadedBvhSourceOnAvatar;
+
+                    if (_toggleMotionBVH.isOn)
+                    {
+                        _loadedBvhSourceOnAvatar.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseTransfer;
+                    }
+                    if (_toggleMotionTPose.isOn)
+                    {
+                        _loadedBvhSourceOnAvatar.SourceType = HumanPoseTransfer.HumanPoseTransferSourceType.HumanPoseClip;
+                    }
+                    if (_faceViewToggle.isOn)
+                    {
+                        _closeGameObject.FaceCameraPropertyActivateVRM();
+                    }
+
+                    _motionControlPanel.AssignAutoPlay(vrmModel);
+
+                    if (_lookAtSphere.isOn)
+                    {
+                        lookAt.Target = _targetSphere.transform;
+                    }
+                    else if (_lookAtCamera.isOn)
+                    {
+                        lookAt.Target = _targetCamera.transform;
+                    }
+                    else
+                    {
+                        lookAt.Target = _targetSphere.transform;
+                    }
+
+                    lookAt.UpdateType = UpdateType.LateUpdate; // after HumanPoseTransfer's setPose
+
+                    var animator = _vrmModel.GetComponent<Animator>();
+                    var leftEye = OffsetOnTransform.Create(animator.GetBoneTransform(HumanBodyBones.LeftEye)).Transform;
+                    var rightEye = OffsetOnTransform.Create(animator.GetBoneTransform(HumanBodyBones.RightEye)).Transform;
+
+                    if (!(leftEye == null || rightEye == null))
+                    {
+                        _leftEyeSaved = leftEye;
+                        _rightEyeSaved = rightEye;
+                        _lookAtBoneFlag = true;
+
+                        // Send information
+                        _informationUpdate.SetVRM(_vrmModel);
+                        _informationUpdate.SetBoneEyeTransform(_leftEyeSaved, _rightEyeSaved);
+                        _informationUpdate.SetLookAtType(_lookAtBoneFlag);
+
+                    }
+                    else
+                    {
+                        if (_vrmModel.GetComponent<VRMLookAtBoneApplyer>() != null)
+                        {
+                            Destroy(_vrmModel.GetComponent<VRMLookAtBoneApplyer>());
+                            _vrmModel.AddComponent<VRMLookAtBlendShapeApplyer>();
+                        }
+
+                        _lookAtBoneFlag = false;
+
+                        // Send information
+                        _informationUpdate.SetVRM(_vrmModel);
+                        _informationUpdate.SetLookAtType(_lookAtBoneFlag);
+                    }
+                }
+           
+                // Set up FirstPerson
+                var m_firstPerson = _vrmModel.GetComponent<VRMFirstPerson>();
+                if (m_firstPerson != null) { m_firstPerson.Setup(); }
+                if (_freeViewpointToggle.isOn) { _closeGameObject.EnableFirstPersonModeOption(); }
             }
         }
 
