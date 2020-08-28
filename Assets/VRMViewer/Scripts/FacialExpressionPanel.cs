@@ -38,7 +38,7 @@ namespace VRMViewer
         private int _validExpNum = 0;
         // 表情の名前
         private string[] _sliderExpName;
-        private string[] _expName;
+        private int[] _correspondingBlendShapeKey;
 
         // The variable to operate facial expression sliders
         private float _barValue;
@@ -60,13 +60,15 @@ namespace VRMViewer
                 if (_vrmModel != null)
                 {
                     var proxy = _vrmModel.GetComponent<VRMBlendShapeProxy>();
+                    var blendShapeKeyWeights = _vrmModel.GetComponent<VRMBlendShapeProxy>().GetValues();
                     for (int i = 0; i < _validExpNum; i++)
                     {
                         if (_objs[i].GetComponent<UISlider>().IsBeingDragged() == true)
                         {
                             // Operate expression
                             _barValue = _objs[i].GetComponent<Slider>().value;
-                            proxy.ImmediatelySetValue(_expName[i], _barValue);
+                            var blendShapeKey = blendShapeKeyWeights.ElementAt(_correspondingBlendShapeKey[i]).Key;
+                            proxy.ImmediatelySetValue(blendShapeKey, _barValue);
                         }
                     }
                 }
@@ -109,11 +111,11 @@ namespace VRMViewer
 
             // Declare the size
             _sliderExpName = new string[_validExpNum];
-            _expName = new string[_validExpNum];
+            _correspondingBlendShapeKey = new int[_validExpNum];
             _validExpNum = 0;
 
             // Save the valid experssions
-            foreach(var clip in proxy.BlendShapeAvatar.Clips)
+            foreach (var (clip, index) in proxy.BlendShapeAvatar.Clips.Select((v, i) => (v, i)))
             {
                 var expressionNums = clip.Values.ToArray().Length;
                 var expressionMaterialNums = clip.MaterialValues.ToArray().Length;
@@ -140,7 +142,7 @@ namespace VRMViewer
 
                     // Save the name of the valid expression
                     _sliderExpName[_validExpNum] = dynamicObject.name;
-                    _expName[_validExpNum] = expressionName.ToUpper();
+                    _correspondingBlendShapeKey[_validExpNum] = index;
                     _validExpNum = _validExpNum + 1;
                 }
             }
