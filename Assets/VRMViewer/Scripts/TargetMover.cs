@@ -84,10 +84,10 @@ namespace VRMViewer
                         _vrmModel.GetComponent<VRMLookAtBlendShapeApplyer>().m_notSetValueApply = true;
 
                         var blednShapeProxy = _vrmModel.GetComponent<VRMBlendShapeProxy>();
-                        blednShapeProxy.ImmediatelySetValue(BlendShapePreset.LookUp, 0.0f);
-                        blednShapeProxy.ImmediatelySetValue(BlendShapePreset.LookDown, 0.0f);
-                        blednShapeProxy.ImmediatelySetValue(BlendShapePreset.LookLeft, 0.0f);
-                        blednShapeProxy.ImmediatelySetValue(BlendShapePreset.LookRight, 0.0f);
+                        blednShapeProxy.ImmediatelySetValue(BlendShapeKey.CreateFromPreset(BlendShapePreset.LookUp), 0.0f);
+                        blednShapeProxy.ImmediatelySetValue(BlendShapeKey.CreateFromPreset(BlendShapePreset.LookDown), 0.0f);
+                        blednShapeProxy.ImmediatelySetValue(BlendShapeKey.CreateFromPreset(BlendShapePreset.LookLeft), 0.0f);
+                        blednShapeProxy.ImmediatelySetValue(BlendShapeKey.CreateFromPreset(BlendShapePreset.LookRight), 0.0f);
                     }
                 }
             }
