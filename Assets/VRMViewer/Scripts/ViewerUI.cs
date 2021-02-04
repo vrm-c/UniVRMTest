@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
 using VRM;
+using SimpleFileBrowser;
 
 namespace VRMViewer
 {
@@ -69,6 +71,9 @@ namespace VRMViewer
 
         [SerializeField]
         private HumanPoseClip _avatarTPose;
+
+        private string _vrmPath = null;
+        private string _bvhPath = null;
 
         private HumanPoseTransfer _bvhSource;
         private HumanPoseTransfer _loadedBvhSourceOnAvatar;
@@ -183,20 +188,52 @@ namespace VRMViewer
 
         private void OnOpenClickedVRM()
         {
-            var path = FileDialogForWindows.FileDialog("open vrm", "vrm");
-
-            if (string.IsNullOrEmpty(path)) { return; }
+            FileBrowser.SetFilters(true, new FileBrowser.Filter("VRM File", ".vrm", ".VRM"));
+            FileBrowser.SetDefaultFilter(".vrm");
+            FileBrowser.AddQuickLink("Users", "C:\\Users", null);
+            StartCoroutine(ShowLoadDialogModel());
+            if (string.IsNullOrEmpty(_vrmPath)) return;
             _errorMessagePanel.gameObject.SetActive(false);
-            LoadModel(path);
+        }
+
+        private IEnumerator ShowLoadDialogModel()
+	    {
+		    yield return FileBrowser.WaitForLoadDialog(FileBrowser.PickMode.Files);
+            //Debug.Log(FileBrowser.Success + " " + FileBrowser.Result);
+            if (FileBrowser.Success)
+            {
+                _vrmPath = FileBrowser.Result[0];
+                LoadModel(_vrmPath);
+            }
+            else
+            {
+                _vrmPath = null;
+            }
         }
 
         private void OnOpenClickedBVH()
         {
-            var path = FileDialogForWindows.FileDialog("open BVH", "bvh");
-
-            if (string.IsNullOrEmpty(path)) { return; }
+            FileBrowser.SetFilters(true, new FileBrowser.Filter("BVH File", ".bvh", ".BVH", ".txt"));
+            FileBrowser.SetDefaultFilter(".bvh");
+            FileBrowser.AddQuickLink("Users", "C:\\Users", null);
+            StartCoroutine(ShowLoadDialogMotion());
+            if (string.IsNullOrEmpty(_bvhPath)) return;
             _errorMessagePanel.gameObject.SetActive(false);
-            LoadMotion(path);
+        }
+
+        private IEnumerator ShowLoadDialogMotion()
+        {
+            yield return FileBrowser.WaitForLoadDialog(FileBrowser.PickMode.Files);
+            //Debug.Log(FileBrowser.Success + " " + FileBrowser.Result);
+            if (FileBrowser.Success)
+            {
+                _bvhPath = FileBrowser.Result[0];
+                LoadMotion(_bvhPath);
+            }
+            else
+            {
+                _bvhPath = null;
+            }
         }
 
         private void LoadModel(string path)
