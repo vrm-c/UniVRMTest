@@ -24,7 +24,10 @@ namespace VRMViewer
         private Button _englishButton;
 
         [SerializeField]
-        private Button _chineseButton;
+        private Button _schineseButton;
+
+        [SerializeField]
+        private Button _tchineseButton;
 
         [SerializeField]
         private Button _koreanButton;
@@ -52,7 +55,8 @@ namespace VRMViewer
             // Language option
             _japaneseButton.onClick.AddListener(Show_Japnaese_Text);
             _englishButton.onClick.AddListener(Show_English_Text);
-            _chineseButton.onClick.AddListener(Show_Chinese_Text);
+            _schineseButton.onClick.AddListener(Show_sChinese_Text);
+            _tchineseButton.onClick.AddListener(Show_tChinese_Text);
             _koreanButton.onClick.AddListener(Show_Korean_Text);
         }
 
@@ -280,7 +284,7 @@ namespace VRMViewer
             _pauseMessage.GetComponent<Text>().text = "The program is paused";
         }
 
-        private void Show_Chinese_Text()
+        private void Show_sChinese_Text()
         {
 #if true
             if (_vrmModel == null)
@@ -288,10 +292,10 @@ namespace VRMViewer
                 foreach (var t in Traverse(_canvasRoot.transform))
                 {
                     var localization = t.GetComponent<Localization>();
-                    if (localization != null) { localization.SetLanguage(LANGUAGES.Chinese); }
+                    if (localization != null) { localization.SetLanguage(LANGUAGES.SimplifiedChinese); }
 
                     var initialLocalization = t.GetComponent<InitialLocalization>();
-                    if (initialLocalization != null) { initialLocalization.SetLanguage(LANGUAGES.Chinese); }
+                    if (initialLocalization != null) { initialLocalization.SetLanguage(LANGUAGES.SimplifiedChinese); }
                 }
             }
             else
@@ -299,7 +303,119 @@ namespace VRMViewer
                 foreach (var t in Traverse(_canvasRoot.transform))
                 {
                     var localization = t.GetComponent<Localization>();
-                    if (localization != null) { localization.SetLanguage(LANGUAGES.Chinese); }
+                    if (localization != null) { localization.SetLanguage(LANGUAGES.SimplifiedChinese); }
+                }
+            }
+#else
+            // 1. Main Panel
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MainPanelTitle").GetComponent<Text>().text = "主菜单";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OpenVRMText").GetComponent<Text>().text = "VRM模型";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OpenBVHText").GetComponent<Text>().text = "BVH数据";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MotionControlText").GetComponent<Text>().text = "动作";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FacialExpressionText").GetComponent<Text>().text = "表情";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "CameraViewText").GetComponent<Text>().text = "视线";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseInformationText").GetComponent<Text>().text = "模型数据";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LanguageTitle").GetComponent<Text>().text = "语言";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "PanelDisaplyText").GetComponent<Text>().text.Replace("\\n", "\n");
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "PanelDisaplyText").GetComponent<Text>().text = "按Tab键\n隐藏或显示介面";
+
+            // 2. Motion control Panel
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MotionControlTitle").GetComponent<Text>().text = "动作";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "BodyPoseText").GetComponent<Text>().text = "身体姿势";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "BVHText").GetComponent<Text>().text = "BVH动作";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "TPoseText").GetComponent<Text>().text = "T-Pose";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "EyeControlText").GetComponent<Text>().text = "视线控制";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LookStraightAheadText").GetComponent<Text>().text = "看向前方";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LookAtCameraText").GetComponent<Text>().text = "看向相机";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LookAtSphereText").GetComponent<Text>().text = "看向球体";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "HideSphereText").GetComponent<Text>().text = "隐藏球体";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OrbitalText").GetComponent<Text>().text = "环绕半径";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "VerticalPositionText").GetComponent<Text>().text = "垂直高度";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "BlendShapeText").GetComponent<Text>().text = "BlendShape测试";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "EnableAutoBlinkText").GetComponent<Text>().text = "自动眨眼";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "EnableLipSyncText").GetComponent<Text>().text = "嘴形同步: aa-ih-ou-E-oh";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MotionControlBackButtonText").GetComponent<Text>().text = "返回";
+
+            // 3. Expression panel
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FacialExpressionTitle").GetComponent<Text>().text = "表情";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FacialExpressionBackButtonText").GetComponent<Text>().text = "返回";
+
+            // 4. Viewpoint panel
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "ViewpointTitle").GetComponent<Text>().text = "视线";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FreeViewpointText").GetComponent<Text>().text = "自由视线";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FirstPersonModeText").GetComponent<Text>().text = "以第一人称渲染模型";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MouseOperationText").GetComponent<Text>().text.Replace("\\n", "\n");
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "MouseOperationText").GetComponent<Text>().text = "鼠标:\n左键或右键: 旋转\n滚轮: 平移";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "KeyboardOperationText").GetComponent<Text>().text.Replace("\\n", "\n");
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "KeyboardOperationText").GetComponent<Text>().text = "键盘:\nW: 前\nS: 后\nA: 左\nD: 右\nP: 暂停\nO: 回到原位\nTab: 隐藏或显示介面";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "AutoChangedViewpointText").GetComponent<Text>().text = "自動切换视线";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "FaceCameraText").GetComponent<Text>().text = "脸部特写";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "DistanceFromFace").GetComponent<Text>().text = "距离";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "ViewpointBackButtonText").GetComponent<Text>().text = "返回";
+
+            // 5. License panel
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseTitle").GetComponent<Text>().text = "模型数据";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Title").GetComponent<Text>().text = "标题";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Version").GetComponent<Text>().text = "版本";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Author").GetComponent<Text>().text = "作者";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Contact").GetComponent<Text>().text = "联系方式";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Reference").GetComponent<Text>().text = "参考";
+
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "AvatarPermission").GetComponent<Text>().text = "人物模型权限";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "AllowedUser").GetComponent<Text>().text = "允许的使用者";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Violent").GetComponent<Text>().text = "暴力表现";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Sexual").GetComponent<Text>().text = "性表现";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Commercial").GetComponent<Text>().text = "商业利用";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Other").GetComponent<Text>().text = "其他条件";
+
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseRules").GetComponent<Text>().text = "二次配布 / 修改许可";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseType").GetComponent<Text>().text = "许可";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OtherLicense").GetComponent<Text>().text = "其他许可";
+            _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseBackButtonText").GetComponent<Text>().text = "返回";
+
+            if (_vrmModel == null)
+            {
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "TitleDynamicText").GetComponent<Text>().text = "标题";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "VersionDynamicText").GetComponent<Text>().text = "版本";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "AuthorDynamicText").GetComponent<Text>().text = "作者";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "ContactDynamicText").GetComponent<Text>().text = "联系方式";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "ReferenceDynamicText").GetComponent<Text>().text = "参考";
+
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "AllowedUserDynamicText").GetComponent<Text>().text = "允许的使用者";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "ViolentDynamicText").GetComponent<Text>().text = "暴力表现";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "SexualDynamicText").GetComponent<Text>().text = "性表现";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "CommercialDynamicText").GetComponent<Text>().text = "商业利用";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OtherDynamicText").GetComponent<Text>().text = "其他条件";
+
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LicenseTypeDynamicText").GetComponent<Text>().text = "许可";
+                _canvasRoot.transform.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "OtherLicenseDynamicText").GetComponent<Text>().text = "其他许可";
+            }
+#endif
+
+            // Pause Message
+            _pauseMessage.GetComponent<Text>().text = "程式暫停中";
+        }
+
+        private void Show_tChinese_Text()
+        {
+#if true
+            if (_vrmModel == null)
+            {
+                foreach (var t in Traverse(_canvasRoot.transform))
+                {
+                    var localization = t.GetComponent<Localization>();
+                    if (localization != null) { localization.SetLanguage(LANGUAGES.TraditionalChinese); }
+
+                    var initialLocalization = t.GetComponent<InitialLocalization>();
+                    if (initialLocalization != null) { initialLocalization.SetLanguage(LANGUAGES.TraditionalChinese); }
+                }
+            }
+            else
+            {
+                foreach (var t in Traverse(_canvasRoot.transform))
+                {
+                    var localization = t.GetComponent<Localization>();
+                    if (localization != null) { localization.SetLanguage(LANGUAGES.TraditionalChinese); }
                 }
             }
 #else
