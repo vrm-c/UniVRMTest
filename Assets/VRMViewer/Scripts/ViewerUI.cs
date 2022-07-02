@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRM;
 using SimpleFileBrowser;
+using UniGLTF;
 
 namespace VRMViewer
 {
@@ -246,11 +247,9 @@ namespace VRMViewer
                 if (!File.Exists(path)) { return; }
 
                 Debug.LogFormat("{0}", path);
-                var bytes = File.ReadAllBytes(path);
-                var context = new VRMImporterContext();
-
-                // GLB形式でJSONを取得しParseします
-                context.ParseGlb(bytes);
+                var parser = new GlbFileParser(path);
+                var vrmData = new VRMData(parser.Parse());
+                var context = new VRMImporterContext(vrmData);
 
                 // GLTFにアクセスできます
                 Debug.LogFormat("{0}", context.GLTF);
@@ -261,11 +260,11 @@ namespace VRMViewer
                 // GLTFからモデルを生成します
                 try
                 {
-                    context.Load();
-                    context.ShowMeshes();
-                    context.EnableUpdateWhenOffscreen();
-                    context.ShowMeshes();
-                    _vrmModel = context.Root;
+                    var result = context.Load();
+                    result.ShowMeshes();
+                    result.EnableUpdateWhenOffscreen();
+                    result.ShowMeshes();
+                    _vrmModel = result.Root;
                     Debug.LogFormat("loaded {0}", _vrmModel.name);
                 }
                 catch (Exception ex)
