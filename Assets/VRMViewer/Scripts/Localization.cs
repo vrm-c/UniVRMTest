@@ -16,7 +16,11 @@ namespace VRMViewer
 
         [SerializeField]
         [TextArea]
-        public string Chinese = "中文";
+        public string SimplifiedChinese = "简体中文";
+
+        [SerializeField]
+        [TextArea]
+        public string TraditionalChinese = "繁体中文";
 
         [SerializeField]
         [TextArea]
@@ -40,8 +44,11 @@ namespace VRMViewer
                 case LANGUAGES.English:
                     _text.text = English;
                     break;
-                case LANGUAGES.Chinese:
-                    _text.text = Chinese;
+                case LANGUAGES.SimplifiedChinese:
+                    _text.text = SimplifiedChinese;
+                    break;
+                case LANGUAGES.TraditionalChinese:
+                    _text.text = TraditionalChinese;
                     break;
                 case LANGUAGES.Korean:
                     _text.text = Korean;
